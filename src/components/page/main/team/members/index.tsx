@@ -18,6 +18,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Plus, Mail, MoreVertical } from "lucide-react"
+// Layout/Modules
+import PageHeader from "@/components/layout/page-header"
 
 // Mock members data
 const mockMembers = [
@@ -40,13 +42,13 @@ export default function MembersPage() {
   }
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold text-foreground">Team Members</h1>
-          <p className="text-muted-foreground mt-2">Manage your team members and invitations</p>
-        </div>
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* ページヘッダー */}
+      <PageHeader 
+        pageTitle="メンバー"
+        pageDescription="Manage your team members and invitations"
+        isBackButton={false}
+      >
         <Dialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
           <DialogTrigger asChild>
             <Button className="rounded-full">
@@ -78,7 +80,7 @@ export default function MembersPage() {
             </form>
           </DialogContent>
         </Dialog>
-      </div>
+      </PageHeader>
 
       {/* Members List */}
       <Card className="border-border rounded-3xl">

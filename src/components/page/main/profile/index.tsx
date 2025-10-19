@@ -3,7 +3,8 @@
 import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Upload } from "lucide-react"
+import { Upload, ArrowLeft } from "lucide-react"
+import Link from "next/link"
 // UI/Components
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,6 +12,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 // Layout/Modules
+import PageHeader from "@/components/layout/page-header"
 import ClientMainLayout from "@/components/layout/client-main-layout"
 
 export default function ProfilePage() {
@@ -43,12 +45,13 @@ export default function ProfilePage() {
 
   return (
     <ClientMainLayout>
-      <div className="max-w-3xl mx-auto space-y-8">
-        {/* Page Header */}
-        <div>
-          <h1 className="text-4xl font-bold text-foreground">プロフィール設定</h1>
-          <p className="text-muted-foreground mt-2">アカウント情報を管理</p>
-        </div>
+      <div className="space-y-6 max-w-7xl mx-auto">
+        {/* ページヘッダー */}
+        <PageHeader
+          pageTitle="プロフィール設定"
+          pageDescription="アカウント情報を管理"
+          isBackButton={true}
+          />
 
         {/* Profile Picture */}
         <Card className="border-border rounded-3xl">

@@ -90,7 +90,7 @@ export default function ClientMainTeamLayout({
               <span className="text-xl font-bold text-foreground">Unimoa</span>
             </Link>
             <div className="hidden md:flex items-center gap-2.5 px-3 py-1.5 bg-accent/50 rounded-lg border border-border">
-              <span className="text-2xl">{team.emoji}</span>
+              <span className="text-sm">{team.emoji}</span>
               <span className="font-medium text-foreground text-sm">{team.name}</span>
             </div>
           </div>

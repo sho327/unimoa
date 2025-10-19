@@ -18,6 +18,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Plus, FileText, Clock, User } from "lucide-react"
+// Layout/Modules
+import PageHeader from "@/components/layout/page-header"
 
 type Note = {
   id: number
@@ -89,13 +91,13 @@ export default function NotesPage() {
   }
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold text-foreground">Notes</h1>
-          <p className="text-muted-foreground mt-2">Shared knowledge base for your team</p>
-        </div>
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* ページヘッダー */}
+      <PageHeader 
+        pageTitle="ノート"
+        pageDescription="Shared knowledge base for your team"
+        isBackButton={false}
+      >
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
             <Button className="rounded-full">
@@ -149,7 +151,7 @@ export default function NotesPage() {
             </form>
           </DialogContent>
         </Dialog>
-      </div>
+      </PageHeader>
 
       {/* Notes Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

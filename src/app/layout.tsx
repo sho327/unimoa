@@ -1,15 +1,18 @@
+// Modules
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import "./globals.css"
+// Privider/Components
 import { ThemeProvider } from '@/components/providers/theme-provider'
+// Global/CSS
+import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Unimoa - チームのためのやさしいグループウェア",
-  description: "チームのつながりをやさしくサポートする、親しみやすいグループウェア",
-  generator: "v0.app",
+  title: "Unimoa - チームのためのシンプルなグループウェア",
+  description: "チームのつながりをシンプルで優しいUIでサポートする、親しみやすいグループウェア",
+  generator: "React/Next.js",
 }
 
 export default function RootLayout({

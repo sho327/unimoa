@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Plus, MoreVertical } from "lucide-react"
+// Layout/Modules
+import PageHeader from "@/components/layout/page-header"
 
 type Task = {
   id: number
@@ -129,12 +131,12 @@ export default function TasksPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">タスク</h1>
-          <p className="text-muted-foreground mt-1 text-sm">チームのタスクを管理して進捗を追跡</p>
-        </div>
+      {/* ページヘッダー */}
+      <PageHeader 
+        pageTitle="タスク"
+        pageDescription="チームのタスクを管理して進捗を追跡"
+        isBackButton={false}
+      >
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
             <Button className="rounded-lg shadow-sm">
@@ -209,7 +211,7 @@ export default function TasksPage() {
             </form>
           </DialogContent>
         </Dialog>
-      </div>
+      </PageHeader>
 
       {/* Task Board */}
       <div className="grid md:grid-cols-3 gap-6">

@@ -1,12 +1,14 @@
+// Modules
 import type React from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Sparkles, Users, CheckSquare, FileText, Calendar, FolderOpen } from "lucide-react"
+// UI/Components
+import { Button } from "@/components/ui/button"
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-      {/* Header */}
+      {/* ヘッダー */}
       <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">

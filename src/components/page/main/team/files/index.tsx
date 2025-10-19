@@ -16,6 +16,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Plus, Upload, FileText, ImageIcon, File, Download, MoreVertical, Grid3x3, List, Folder } from "lucide-react"
+// Layout/Modules
+import PageHeader from "@/components/layout/page-header"
 
 type FileItem = {
   id: number
@@ -117,13 +119,13 @@ export default function FilesPage() {
   }
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold text-foreground">Files</h1>
-          <p className="text-muted-foreground mt-2">Share and organize team files</p>
-        </div>
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* ページヘッダー */}
+      <PageHeader 
+        pageTitle="ファイル共有"
+        pageDescription="Share and organize team files"
+        isBackButton={false}
+      >
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1 bg-secondary/50 rounded-full p-1">
             <Button
@@ -174,7 +176,7 @@ export default function FilesPage() {
             </DialogContent>
           </Dialog>
         </div>
-      </div>
+      </PageHeader>
 
       {/* Folders Tabs */}
       <Tabs defaultValue={folders[0]} className="space-y-6">

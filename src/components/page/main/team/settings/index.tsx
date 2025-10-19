@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Save, Trash2 } from "lucide-react"
+// Layout/Modules
+import PageHeader from "@/components/layout/page-header"
 
 // Mock team data
 const mockTeams: Record<string, { name: string; emoji: string; description: string }> = {
@@ -34,12 +36,13 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="space-y-8 max-w-3xl mx-auto">
-      {/* Header */}
-      <div>
-        <h1 className="text-4xl font-bold text-foreground">Team Settings</h1>
-        <p className="text-muted-foreground mt-2">Manage your team's information and preferences</p>
-      </div>
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* ページヘッダー */}
+      <PageHeader 
+        pageTitle="チーム設定"
+        pageDescription="Manage your team's information and preferences"
+        isBackButton={false}
+      />
 
       {/* Team Information */}
       <Card className="border-border rounded-3xl">

@@ -18,6 +18,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Plus, CalendarIcon, Clock, MapPin, Users } from "lucide-react"
+// Layout/Modules
+import PageHeader from "@/components/layout/page-header"
 
 type Event = {
   id: number
@@ -116,13 +118,13 @@ export default function CalendarPage() {
   )
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold text-foreground">Calendar</h1>
-          <p className="text-muted-foreground mt-2">Schedule and manage team events</p>
-        </div>
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* ページヘッダー */}
+      <PageHeader
+        pageTitle="カレンダー"
+        pageDescription="チームの予定を管理します"
+        isBackButton={false}
+      >
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
             <Button className="rounded-full">
@@ -199,7 +201,7 @@ export default function CalendarPage() {
             </form>
           </DialogContent>
         </Dialog>
-      </div>
+      </PageHeader>
 
       {/* Events Timeline */}
       <div className="space-y-6">

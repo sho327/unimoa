@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { CheckSquare, FileText, Calendar, TrendingUp, Plus } from "lucide-react"
 import Link from "next/link"
+// Layout/Modules
+import PageHeader from "@/components/layout/page-header"
 
 // Mock recent activity data
 const recentActivity = [
@@ -55,11 +57,13 @@ export default function TeamHomePage({
   }
 }) {
   return (
-    <div className="space-y-6 max-w-6xl mx-auto">
-      <div className="space-y-1.5">
-        <h1 className="text-3xl font-bold text-foreground">チームホーム</h1>
-        <p className="text-muted-foreground text-sm">おかえりなさい！チームの最新情報をチェックしましょう。</p>
-      </div>
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* ページヘッダー */}
+      <PageHeader 
+        pageTitle="チームホーム"
+        pageDescription="おかえりなさい！チームの最新情報をチェックしましょう"
+        isBackButton={false}
+      />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {quickStats.map((stat) => {
