@@ -146,31 +146,37 @@ export default function FilesPage() {
             </Button>
           </div>
           <Dialog open={isUploadOpen} onOpenChange={setIsUploadOpen}>
+            {/* ファイルアップロードボタン(ダイアログトリガー) */}
             <DialogTrigger asChild>
-              <Button className="rounded-full">
-                <Plus className="w-5 h-5 mr-2" />
-                Upload File
+              <Button size="sm" className="gap-2 rounded-sm">
+                <Plus className="w-4 h-4" />
+                ファイルアップロード
               </Button>
             </DialogTrigger>
-            <DialogContent className="rounded-3xl">
+            {/* ファイルアップロードダイアログ */}
+            <DialogContent className="rounded-sm">
+              {/* ダイアログ/ヘッダー */}
               <DialogHeader>
-                <DialogTitle>Upload file</DialogTitle>
-                <DialogDescription>Add a file to your team's storage</DialogDescription>
+                <DialogTitle>ファイルアップロード</DialogTitle>
+                <DialogDescription>チームのストレージにファイルを追加します</DialogDescription>
               </DialogHeader>
+              {/* ダイアログ/ボディ */}
               <div className="space-y-4">
-                <div className="border-2 border-dashed border-border rounded-2xl p-12 text-center space-y-4">
+                {/* ファイル選択 */}
+                <div className="border-2 border-dashed border-border rounded-sm p-12 text-center space-y-4">
                   <Upload className="w-12 h-12 text-muted-foreground mx-auto" />
                   <div>
-                    <p className="text-foreground font-medium">Drop files here or click to browse</p>
-                    <p className="text-sm text-muted-foreground mt-1">Support for images, documents, and more</p>
+                    <p className="text-foreground font-medium">アップロードするファイルを選択してください</p>
+                    <p className="text-sm text-muted-foreground mt-1">画像、その他ファイル形式に対応しています</p>
                   </div>
-                  <Button variant="outline" className="rounded-xl bg-transparent">
-                    Select Files
+                  <Button variant="outline" className="rounded-sm bg-transparent">
+                    ファイルを選択
                   </Button>
                 </div>
+                {/* フォルダ選択 */}
                 <div className="space-y-2">
-                  <Label htmlFor="folder">Folder</Label>
-                  <Input id="folder" type="text" placeholder="Design, Documents, etc." className="rounded-xl" />
+                  <Label htmlFor="folder">フォルダ</Label>
+                  <Input id="folder" type="text" placeholder="デザイン, 書類, etc..." className="rounded-sm" />
                 </div>
               </div>
             </DialogContent>
@@ -178,14 +184,14 @@ export default function FilesPage() {
         </div>
       </PageHeader>
 
-      {/* Folders Tabs */}
+      {/* フォルダ/タブ */}
       <Tabs defaultValue={folders[0]} className="space-y-6">
-        <TabsList className="bg-secondary/50 rounded-2xl p-1">
+        <TabsList className="bg-secondary/50 rounded-sm p-1">
           {folders.map((folder) => (
-            <TabsTrigger key={folder} value={folder} className="rounded-xl">
+            <TabsTrigger key={folder} value={folder} className="rounded-sm">
               <Folder className="w-4 h-4 mr-2" />
               {folder}
-              <Badge variant="secondary" className="ml-2 rounded-full">
+              <Badge variant="secondary" className="ml-2 rounded-sm">
                 {filesByFolder[folder].length}
               </Badge>
             </TabsTrigger>

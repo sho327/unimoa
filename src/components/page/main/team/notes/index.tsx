@@ -158,7 +158,7 @@ export default function NotesPage() {
         {notes.map((note) => (
           <Card
             key={note.id}
-            className="border-border rounded-3xl cursor-pointer hover:shadow-lg transition-all hover:scale-105"
+            className="border-border rounded-sm cursor-pointer hover:shadow-lg transition-all hover:scale-105"
             onClick={() => setSelectedNote(note)}
           >
             <CardHeader>

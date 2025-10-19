@@ -5,7 +5,7 @@ import { Inter } from "next/font/google"
 // Privider/Components
 import { ThemeProvider } from '@/components/providers/theme-provider'
 // Global/CSS
-import "./globals.css"
+import "@/styles/globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
 
