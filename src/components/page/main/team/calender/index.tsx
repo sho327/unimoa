@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Plus, CalendarIcon, Clock, MapPin, Users } from "lucide-react"
-// Layout/Modules
+// Layout/Components
 import PageHeader from "@/components/layout/page-header"
 
 type Event = {

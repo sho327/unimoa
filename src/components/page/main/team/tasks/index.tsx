@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Plus, MoreVertical } from "lucide-react"
-// Layout/Modules
+// Layout/Components
 import PageHeader from "@/components/layout/page-header"
 
 type Task = {

@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-// Layout/Modules
+// Layout/Components
 import PageHeader from "@/components/layout/page-header"
 import ClientMainLayout from "@/components/layout/client-main-layout"
 

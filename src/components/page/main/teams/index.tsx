@@ -3,10 +3,9 @@
 import type React from "react"
 import { useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Plus, Users, Upload } from "lucide-react"
+import { Plus, Upload, UsersRound } from "lucide-react"
 // UI/Components
 import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Dialog,
   DialogContent,
@@ -17,40 +16,21 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-// Layout/Modules
+// Layout/Components
 import PageHeader from "@/components/layout/page-header"
 import ClientMainLayout from "@/components/layout/client-main-layout"
-
-// Mock teams data
-// 初心者にもわかりやすいよう、各チームは「アイコン(emoji)・名前・概要(description)」で構成
-const mockTeams = [
-  {
-    id: "1",
-    name: "デザインチーム",
-    emoji: "🎨",
-    description: "UI/UX デザインとブランド体験の向上に取り組むチームです。",
-    memberCount: 5,
-  },
-  {
-    id: "2",
-    name: "開発チーム",
-    emoji: "💻",
-    description: "Web アプリケーションの実装・運用を担当しています。",
-    memberCount: 8,
-  },
-  {
-    id: "3",
-    name: "マーケティング",
-    emoji: "📢",
-    description: "プロダクトの価値を伝え、ユーザーとの接点を広げます。",
-    memberCount: 4,
-  },
-]
+// Common/Components
+import EmptyState from "@/components/common/empty-state"
+// Page/Components
+import TeamsItem from "@/components/page/main/teams/teams-item"
+// Types
+import { Team } from "@/types/team"
+// Mocks
+import { MockTeams } from "@/mocks/teams"
 
 export default function TeamsPage() {
   const router = useRouter()
-  const [teams] = useState(mockTeams)
+  const [teams] = useState<Team[]>(MockTeams)
   const [isCreateOpen, setIsCreateOpen] = useState(false)
   const [newTeamName, setNewTeamName] = useState("")
   const [newTeamDescription, setNewTeamDescription] = useState("")
@@ -80,6 +60,7 @@ export default function TeamsPage() {
       <div className="space-y-6 max-w-7xl mx-auto">
         {/* ページヘッダー（タイトル行） */}
         <PageHeader 
+          Icon={UsersRound}
           pageTitle="チーム"
           pageDescription="チームを選択して始めましょう"
           isBackButton={false}
@@ -202,44 +183,24 @@ export default function TeamsPage() {
 
         {/* チーム一覧（アイコン・名前・概要） */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {teams.map((team) => (
-            <Card
+          {teams && teams.map((team) => (
+            <TeamsItem 
               key={team.id}
-              className="cursor-pointer hover:shadow-md transition-shadow border bg-card rounded-sm"
-              onClick={() => handleTeamClick(team.id)}
-            >
-              <CardHeader>
-                <div className="flex items-start gap-3">
-                  {/* チームのアイコン */}
-                  {/* 初心者向け解説:
-                      - 画像URL（team.iconUrl）があれば AvatarImage で表示します。
-                      - 画像がなければ AvatarFallback でチーム名の先頭1文字を表示します。 */}
-                  <Avatar className="w-12 h-12">
-                    {/** team.iconUrl は今はモックなので未設定ですが、将来的に保存されたURLを想定 */}
-                    {/** 何もない場合は AvatarFallback が自動的に表示されます */}
-                    <AvatarImage src={(team as any).iconUrl} alt={`${team.name} icon`} />
-                    <AvatarFallback className="text-sm font-medium">
-                      {team.name.charAt(0)}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1 min-w-0">
-                    {/* チーム名称 */}
-                    <CardTitle className="text-base font-semibold truncate">{team.name}</CardTitle>
-                    {/* チーム詳細 */}
-                    <CardDescription className="mt-1 line-clamp-2">
-                      {team.description}
-                    </CardDescription>
-                    {/* メンバー数 */}
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-2">
-                      <Users className="w-3.5 h-3.5" />
-                      {team.memberCount} 人
-                    </div>
-                  </div>
-                </div>
-              </CardHeader>
-            </Card>
+              team={team}
+              handleTeamClick={(teamId: string) => handleTeamClick(team.id)}
+              />
           ))}
         </div>
+        {/* チームが0件の場合の表示 */}
+        {teams.length === 0 && (
+          <EmptyState
+            Icon={UsersRound}
+            title="チームが見つかりません"
+            description="新しいチームを作成してください。"
+            actionLabel="最初のチームを作成"
+            onAction={() => setIsCreateOpen(true)}
+          />
+        )}
       </div>
     </ClientMainLayout>
   )

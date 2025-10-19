@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Plus, Upload, FileText, ImageIcon, File, Download, MoreVertical, Grid3x3, List, Folder } from "lucide-react"
-// Layout/Modules
+// Layout/Components
 import PageHeader from "@/components/layout/page-header"
 
 type FileItem = {

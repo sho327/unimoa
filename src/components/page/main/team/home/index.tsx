@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { CheckSquare, FileText, Calendar, TrendingUp, Plus } from "lucide-react"
 import Link from "next/link"
-// Layout/Modules
+// Layout/Components
 import PageHeader from "@/components/layout/page-header"
 
 // Mock recent activity data
