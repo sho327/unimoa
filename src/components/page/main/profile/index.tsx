@@ -53,8 +53,8 @@ export default function ProfilePage() {
           isBackButton={true}
           />
 
-        {/* Profile Picture */}
-        <Card className="border-border rounded-3xl">
+        {/* プロフィール画像 */}
+        <Card className="border-border rounded-sm">
           <CardHeader>
             <CardTitle>プロフィール画像</CardTitle>
             <CardDescription>アバターをアップロードして個性を表現しましょう</CardDescription>
@@ -67,7 +67,7 @@ export default function ProfilePage() {
                 </AvatarFallback>
               </Avatar>
               <div className="space-y-2">
-                <Button variant="outline" className="rounded-xl bg-transparent">
+                <Button variant="outline" className="rounded-sm bg-transparent">
                   <Upload className="w-4 h-4 mr-2" />
                   画像をアップロード
                 </Button>
@@ -78,7 +78,7 @@ export default function ProfilePage() {
         </Card>
 
         {/* Basic Information */}
-        <Card className="border-border rounded-3xl">
+        <Card className="border-border rounded-sm">
           <CardHeader>
             <CardTitle>基本情報</CardTitle>
             <CardDescription>名前とプロフィール情報を更新</CardDescription>
@@ -93,7 +93,7 @@ export default function ProfilePage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="rounded-xl"
+                  className="rounded-sm"
                 />
               </div>
               <div className="space-y-2">
@@ -104,7 +104,7 @@ export default function ProfilePage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="rounded-xl"
+                  className="rounded-sm"
                 />
               </div>
               <div className="space-y-2">
@@ -115,10 +115,10 @@ export default function ProfilePage() {
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   placeholder="あなたについて教えてください"
-                  className="rounded-xl"
+                  className="rounded-sm"
                 />
               </div>
-              <Button type="submit" className="rounded-xl">
+              <Button type="submit" className="rounded-sm">
                 プロフィールを更新
               </Button>
             </form>
@@ -126,7 +126,7 @@ export default function ProfilePage() {
         </Card>
 
         {/* Password Change */}
-        <Card className="border-border rounded-3xl">
+        <Card className="border-border rounded-sm">
           <CardHeader>
             <CardTitle>パスワード変更</CardTitle>
             <CardDescription>アカウントのセキュリティを保護</CardDescription>
@@ -141,7 +141,7 @@ export default function ProfilePage() {
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   required
-                  className="rounded-xl"
+                  className="rounded-sm"
                 />
               </div>
               <div className="space-y-2">
@@ -152,7 +152,7 @@ export default function ProfilePage() {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   required
-                  className="rounded-xl"
+                  className="rounded-sm"
                 />
               </div>
               <div className="space-y-2">
@@ -163,10 +163,10 @@ export default function ProfilePage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  className="rounded-xl"
+                  className="rounded-sm"
                 />
               </div>
-              <Button type="submit" className="rounded-xl">
+              <Button type="submit" className="rounded-sm">
                 パスワードを更新
               </Button>
             </form>
@@ -174,13 +174,13 @@ export default function ProfilePage() {
         </Card>
 
         {/* Danger Zone */}
-        <Card className="border-destructive/50 rounded-3xl">
+        <Card className="border-destructive/50 rounded-sm">
           <CardHeader>
             <CardTitle className="text-destructive">危険な操作</CardTitle>
             <CardDescription>アカウントの削除は取り消せません</CardDescription>
           </CardHeader>
           <CardContent>
-            <Button variant="destructive" className="rounded-xl">
+            <Button variant="destructive" className="rounded-sm">
               アカウントを削除
             </Button>
           </CardContent>
