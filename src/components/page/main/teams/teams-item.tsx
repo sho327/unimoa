@@ -16,7 +16,7 @@ export default function TeamsItem({
 }) {
   return (
     <Card
-      className="cursor-pointer hover:shadow-md transition-shadow border bg-card rounded-sm"
+      className="cursor-pointer hover:shadow-md transition-shadow border bg-card rounded-xl"
       onClick={() => handleTeamClick(team.id)}
       >
       <CardHeader>

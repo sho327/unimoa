@@ -26,19 +26,19 @@
   Backlog風の温かみのある洗練されたカラーパレット - 寒色から暖色系に変更
 */
 :root {
-  /* 背景色 - 温かみのある非常に明るいベージュグレー */
-  --background: oklch(0.99 0.005 85);
-  --foreground: oklch(0.25 0.01 85);
+  /* 背景色 - 非常に薄い緑色のグラデーション */
+  --background: oklch(0.98 0.005 140);
+  --foreground: oklch(0.15 0.01 140);
 
   /* カード - 純白 */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.25 0.01 85);
+  --card-foreground: oklch(0.15 0.01 140);
 
   /* ポップオーバー */
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0.01 85);
+  --popover-foreground: oklch(0.15 0.01 140);
 
-  --primary: oklch(0.62 0.12 142);
+  --primary: oklch(0.68 0.20 155);
   --primary-foreground: oklch(0.985 0 0);
   /* --primary: oklch(0.6 0.12 142);
   --primary-foreground: oklch(0.985 0 0); */
@@ -46,20 +46,20 @@
   /* --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0); */
   /* セカンダリ - 温かみのあるライトグレー */
-  --secondary: oklch(0.97 0.005 85);
-  --secondary-foreground: oklch(0.25 0.01 85);
+  --secondary: oklch(0.97 0.003 120);
+  --secondary-foreground: oklch(0.15 0.01 140);
 
   /* --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0); */
   /* ミュート */
-  --muted: oklch(0.96 0.005 85);
-  --muted-foreground: oklch(0.5 0.01 85);
+  --muted: oklch(0.96 0.003 120);
+  --muted-foreground: oklch(0.4 0.01 140);
 
   /* --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0); */
   /* アクセント */
-  --accent: oklch(0.96 0.008 85);
-  --accent-foreground: oklch(0.25 0.01 85);
+  --accent: oklch(0.96 0.005 120);
+  --accent-foreground: oklch(0.15 0.01 140);
   
   /* --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325); */
@@ -68,9 +68,9 @@
   --destructive-foreground: oklch(1 0 0);
 
   /* ボーダー - 非常に薄いグレー */
-  --border: oklch(0.93 0.003 85);
-  --input: oklch(0.93 0.003 85);
-  --ring: oklch(0.55 0.12 220);
+  --border: oklch(0.93 0.002 120);
+  --input: oklch(0.93 0.002 120);
+  --ring: oklch(0.68 0.20 155);
 
   /* チャート - 温かみのあるカラーパレット */
   --chart-1: oklch(0.55 0.12 220);
@@ -84,13 +84,13 @@
 
   /* サイドバー */
   --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.25 0.01 85);
-  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.15 0.01 140);
+  --sidebar-primary: oklch(0.68 0.20 155);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0.005 85);
-  --sidebar-accent-foreground: oklch(0.25 0.01 85);
-  --sidebar-border: oklch(0.93 0.003 85);
-  --sidebar-ring: oklch(0.55 0.12 220);
+  --sidebar-accent: oklch(0.97 0.003 120);
+  --sidebar-accent-foreground: oklch(0.15 0.01 140);
+  --sidebar-border: oklch(0.93 0.002 120);
+  --sidebar-ring: oklch(0.68 0.20 155);
 }
 
 /*
