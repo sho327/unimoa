@@ -29,7 +29,7 @@ export default function TeamsItem({
             {/** team.iconUrl は今はモックなので未設定ですが、将来的に保存されたURLを想定 */}
             {/** 何もない場合は AvatarFallback が自動的に表示されます */}
             <AvatarImage src={(team as any).iconUrl} alt={`${team.name} icon`} />
-            <AvatarFallback className="text-sm font-medium">
+            <AvatarFallback className="text-sm font-medium bg-secondary">
               {team.name.charAt(0)}
             </AvatarFallback>
           </Avatar>

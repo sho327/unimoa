@@ -31,7 +31,7 @@ export default function PageHeader({
             <Button
               variant="outline"
               size="sm"
-              className="border-gray-200 text-gray-700 hover:bg-gray-50 bg-transparent"
+              className="border-gray-200 text-gray-700 hover:bg-gray-200 hover:text-gray-700 bg-transparent"
             >
               <ArrowLeft className="w-4 h-4 mr-1" />
               戻る
@@ -43,7 +43,7 @@ export default function PageHeader({
       <div className = "flex items-center justify-between">
         <div className="flex items-center gap-3">
           {Icon &&
-            <div className="p-3 bg-primary/10 rounded-xl">
+            <div className="p-3 bg-secondary rounded-xl">
               <Icon className="w-7 h-7 text-primary" />
             </div>
           }

@@ -89,20 +89,19 @@ export default function ClientMainTeamLayout({
               </div>
               <span className="text-xl font-bold text-foreground">Unimoa</span>
             </Link>
-            <div className="hidden md:flex items-center gap-2.5 px-3 py-1.5 bg-accent/50 rounded-lg border border-border">
-              <span className="text-sm">{team.emoji}</span>
-              <span className="font-medium text-foreground text-sm">{team.name}</span>
+            <div className="hidden md:flex items-center gap-1.5 px-2 bg-transparent">
+              <span className="font-semibold text-foreground text-sm">{team.name}</span>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <Link href="/profile">
-              <Button variant="ghost" size="icon" className="rounded-lg hover:bg-accent">
+              <Button variant="ghost" size="icon" className="rounded-lg hover:bg-primary/10 hover:text-gray-700">
                 <User className="w-5 h-5" />
               </Button>
             </Link>
             <Button
               variant="ghost"
-              className="rounded-lg hidden md:inline-flex hover:bg-accent text-sm"
+              className="rounded-lg hidden md:inline-flex hover:bg-primary/10 hover:text-gray-700 text-sm"
               onClick={() => router.push("/teams")}
             >
               チーム切替
@@ -123,7 +122,7 @@ export default function ClientMainTeamLayout({
                   <Button
                     variant={isActive ? "default" : "ghost"}
                     size="sm"
-                    className={`rounded-lg whitespace-nowrap ${isActive ? "shadow-sm" : ""}`}
+                    className={`rounded-lg whitespace-nowrap ${isActive ? "shadow-sm" : "hover:bg-primary/10 hover:text-gray-700"}`}
                   >
                     <Icon className="w-4 h-4 mr-2" />
                     {item.label}

@@ -93,7 +93,7 @@ export default function TeamsPage() {
           {/* 新規作成ボタン */}
           <Button 
             size="sm" 
-            className="gap-2 rounded-sm"
+            className="gap-2 rounded-md"
             onClick={() => setIsCreateOpen(true)}
           >
             <Plus className="w-4 h-4" />
@@ -116,8 +116,8 @@ export default function TeamsPage() {
         {teams.length === 0 && (
           <EmptyState
             Icon={UsersRound}
-            title="チームが見つかりません"
-            description="新しいチームを作成してください。"
+            title="まだチームがありません"
+            description="下のボタンから新しいチームを作成しましょう。"
             actionLabel="最初のチームを作成"
             onAction={() => setIsCreateOpen(true)}
           />

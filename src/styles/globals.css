@@ -1,168 +1,84 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/*
-  このファイルは Tailwind v4（@import ベース）で使うグローバルテーマ設定です。
-  役割の概要:
-  - :root/.dark で色などのデザイントークン（CSS変数）を定義
-  - @theme inline で Tailwind のユーティリティ（bg-*, text-*, border-* など）にマッピング
-  - @layer base でデフォルトの外観（背景色・文字色・アウトライン等）を適用
-
-  例えば:
-  - `--primary` は `bg-primary`, `text-primary`, `border-primary` として利用可能
-  - `--primary-foreground` は `text-primary-foreground` のように前景色として利用可能
-  - `bg-primary/10` のように不透明度の指定（/10, /20 ...）も利用可能
-
-  セマンティックカラー（primary/secondary/accent/destructive など）で一貫した UI を構築します。
-*/
-
-/* `dark:` バリアントを `.dark` クラス配下に適用するための定義 */
 @custom-variant dark (&:is(.dark *));
 
-/*
-  :root ではライトテーマ用のデザイントークンを定義します。
-  ここで定義した値は @theme inline で Tailwind のユーティリティに結びつきます。
-  （下の .dark セレクタはダークテーマ用の対応値）
-  Backlog風の温かみのある洗練されたカラーパレット - 寒色から暖色系に変更
-*/
 :root {
-  /* 背景色 - 非常に薄い緑色のグラデーション */
-  --background: oklch(0.98 0.005 140);
-  --foreground: oklch(0.15 0.01 140);
-
-  /* カード - 純白 */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.01 140);
-
-  /* ポップオーバー */
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.01 140);
-
-  --primary: oklch(0.68 0.20 155);
-  --primary-foreground: oklch(0.985 0 0);
-  /* --primary: oklch(0.6 0.12 142);
-  --primary-foreground: oklch(0.985 0 0); */
-
-  /* --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0); */
-  /* セカンダリ - 温かみのあるライトグレー */
-  --secondary: oklch(0.97 0.003 120);
-  --secondary-foreground: oklch(0.15 0.01 140);
-
-  /* --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0); */
-  /* ミュート */
-  --muted: oklch(0.96 0.003 120);
-  --muted-foreground: oklch(0.4 0.01 140);
-
-  /* --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0); */
-  /* アクセント */
-  --accent: oklch(0.96 0.005 120);
-  --accent-foreground: oklch(0.15 0.01 140);
-  
-  /* --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325); */
-  /* 破壊的アクション - 柔らかいレッド */
-  --destructive: oklch(0.55 0.15 25);
-  --destructive-foreground: oklch(1 0 0);
-
-  /* ボーダー - 非常に薄いグレー */
-  --border: oklch(0.93 0.002 120);
-  --input: oklch(0.93 0.002 120);
-  --ring: oklch(0.68 0.20 155);
-
-  /* チャート - 温かみのあるカラーパレット */
-  --chart-1: oklch(0.55 0.12 220);
-  --chart-2: oklch(0.62 0.13 280);
-  --chart-3: oklch(0.68 0.11 160);
-  --chart-4: oklch(0.72 0.12 50);
-  --chart-5: oklch(0.65 0.12 340);
-
-  /* 角丸 - より柔らかく */
-  --radius: 0.75rem;
-
-  /* サイドバー */
-  --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.15 0.01 140);
-  --sidebar-primary: oklch(0.68 0.20 155);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0.003 120);
-  --sidebar-accent-foreground: oklch(0.15 0.01 140);
-  --sidebar-border: oklch(0.93 0.002 120);
-  --sidebar-ring: oklch(0.68 0.20 155);
+  /* Unimoa brand colors - #18BC9C primary, #f4f6f9 background */
+  --background: #f4f6f9;
+  --foreground: #2c3e50;
+  --card: #ffffff;
+  --card-foreground: #2c3e50;
+  --popover: #ffffff;
+  --popover-foreground: #2c3e50;
+  --primary: #18bc9c;
+  --primary-foreground: #ffffff;
+  --secondary: #ecf0f1;
+  --secondary-foreground: #2c3e50;
+  --muted: #bdc3c7;
+  --muted-foreground: #7f8c8d;
+  --accent: #3498db;
+  --accent-foreground: #ffffff;
+  --destructive: #e74c3c;
+  --destructive-foreground: #ffffff;
+  --border: #dfe6e9;
+  --input: #dfe6e9;
+  --ring: #18bc9c;
+  --chart-1: #18bc9c;
+  --chart-2: #3498db;
+  --chart-3: #9b59b6;
+  --chart-4: #f39c12;
+  --chart-5: #e74c3c;
+  /* Using rounded-sm (0.125rem) as specified */
+  --radius: 0.125rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #2c3e50;
+  --sidebar-primary: #18bc9c;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ecf0f1;
+  --sidebar-accent-foreground: #2c3e50;
+  --sidebar-border: #dfe6e9;
+  --sidebar-ring: #18bc9c;
 }
 
-/*
-  ダークテーマ用のデザイントークン。
-  `<html class="dark">`（または上位要素に `.dark`）が付与された時に有効になります。
-*/
 .dark {
-  --background: oklch(0.15 0.01 240);
-  --foreground: oklch(0.95 0.005 240);
-  --card: oklch(0.18 0.01 240);
-  --card-foreground: oklch(0.95 0.005 240);
-  --popover: oklch(0.18 0.01 240);
-  --popover-foreground: oklch(0.95 0.005 240);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  
-  /* --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0); */
-  --secondary: oklch(0.25 0.015 240);
-  --secondary-foreground: oklch(0.95 0.005 240);
-  
-  /* --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0); */
-  --muted: oklch(0.25 0.015 240);
-  --muted-foreground: oklch(0.6 0.015 240);
-
-  /* --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0); */
-  --accent: oklch(0.3 0.02 240);
-  --accent-foreground: oklch(0.95 0.005 240);
-
-  /* --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331); */
-  /* 破壊的アクション - 柔らかいレッド */
-  --destructive: oklch(0.5 0.18 25);
-  --destructive-foreground: oklch(0.95 0.005 240);
-  
-  --border: oklch(0.25 0.015 240);
-  --input: oklch(0.25 0.015 240);
-  --ring: oklch(0.55 0.12 220);
-  --chart-1: oklch(0.55 0.12 220);
-  --chart-2: oklch(0.62 0.13 280);
-  --chart-3: oklch(0.68 0.11 160);
-  --chart-4: oklch(0.72 0.12 50);
-  --chart-5: oklch(0.65 0.12 340);
-  --sidebar: oklch(0.18 0.01 240);
-  --sidebar-foreground: oklch(0.95 0.005 240);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.25 0.015 240);
-  --sidebar-accent-foreground: oklch(0.95 0.005 240);
-  --sidebar-border: oklch(0.25 0.015 240);
-  --sidebar-ring: oklch(0.55 0.12 220);
+  --background: #1a1a1a;
+  --foreground: #f4f6f9;
+  --card: #2c2c2c;
+  --card-foreground: #f4f6f9;
+  --popover: #2c2c2c;
+  --popover-foreground: #f4f6f9;
+  --primary: #18bc9c;
+  --primary-foreground: #ffffff;
+  --secondary: #3a3a3a;
+  --secondary-foreground: #f4f6f9;
+  --muted: #4a4a4a;
+  --muted-foreground: #a0a0a0;
+  --accent: #3498db;
+  --accent-foreground: #ffffff;
+  --destructive: #e74c3c;
+  --destructive-foreground: #ffffff;
+  --border: #3a3a3a;
+  --input: #3a3a3a;
+  --ring: #18bc9c;
+  --chart-1: #18bc9c;
+  --chart-2: #3498db;
+  --chart-3: #9b59b6;
+  --chart-4: #f39c12;
+  --chart-5: #e74c3c;
+  --sidebar: #2c2c2c;
+  --sidebar-foreground: #f4f6f9;
+  --sidebar-primary: #18bc9c;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #3a3a3a;
+  --sidebar-accent-foreground: #f4f6f9;
+  --sidebar-border: #3a3a3a;
+  --sidebar-ring: #18bc9c;
 }
 
-/*
-  Tailwind のユーティリティへマッピングするための宣言。
-  ここで `--color-*` に割り当てると、
-  - 背景: `bg-{name}`
-  - 文字: `text-{name}`
-  - 枠線: `border-{name}`
-  - リング: `ring-{name}`
-  といった形でユーティリティとして使えるようになります。
-
-  例:
-  - `--color-primary` -> `bg-primary`, `text-primary`, `border-primary`
-  - `--color-primary-foreground` -> `text-primary-foreground`
-  - `--radius-*` は角丸のスケールに利用
-*/
 @theme inline {
-  --font-sans: "Inter", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  /* Updated font to Noto Sans JP */
+  --font-sans: "Noto Sans JP", "Noto Sans JP Fallback", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -187,10 +103,10 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 2px);
-  --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) + 2px);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: var(--radius);
+  --radius-md: calc(var(--radius) * 2);
+  --radius-lg: calc(var(--radius) * 3);
+  --radius-xl: calc(var(--radius) * 4);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -201,11 +117,6 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/*
-  ベース層のスタイル適用。
-  - すべての要素に `border-border` と `outline-ring/50` を適用
-  - body にテーマで定義した背景色・文字色を適用
-*/
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -214,10 +125,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-/*
-  メモ: 成功/警告/情報などのセマンティックカラーを増やしたい場合の例
-  1) :root と .dark に `--success`, `--success-foreground` などを追加
-  2) @theme inline に `--color-success`, `--color-success-foreground` を追加
-  これで `text-success`, `bg-success`, `bg-success/10` などが利用可能になります。
-*/
