@@ -16,11 +16,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 // Types
-import { Notifications, Notification } from "@/components/layout/types"
+import { Notification } from "@/components/layout/types"
 
 
 interface NotificationDropdownProps {
-    notifications: Notifications[]
+    notifications: Notification[]
     unreadCount: number
     onMarkAsRead: (id: string) => void
     onMarkAllAsRead: () => void
@@ -139,8 +139,7 @@ export function NotificationDropdown({
                             {notifications.map((notification) => (
                                 <DropdownMenuItem
                                     key={notification.id}
-                                    className={`p-3 cursor-pointer hover:bg-slate-50 ${!notification.isRead ? "bg-blue-50/50" : ""
-                                        }`}
+                                    className={`p-3 cursor-pointer hover:bg-primary/10 hover:text-gray-700 ${!notification.isRead ? "bg-blue-50/50" : ""}`}
                                     onClick={() => handleNotificationClick(notification)}
                                 >
                                     <div className="flex items-start gap-3 w-full">
@@ -175,7 +174,7 @@ export function NotificationDropdown({
                     <>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                            className="text-center text-sm text-slate-600 hover:text-slate-800 cursor-pointer"
+                            className="text-center text-sm text-slate-600 hover:bg-primary/10 hover:text-gray-700 cursor-pointer"
                             onClick={() => {
                                 router.push("/notifications")
                                 setIsOpen(false)

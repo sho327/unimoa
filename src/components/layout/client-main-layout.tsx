@@ -47,8 +47,8 @@ export default function ClientMainLayout({
               onMarkAllAsRead={() => {}}
               />
             <DropdownMenu>
-              <DropdownMenuTrigger asChild className="hover:bg-primary/10 hover:text-gray-700">
-                <Button variant='ghost' size="sm">
+              <DropdownMenuTrigger asChild>
+                <Button variant='ghost' size="sm" className="hover:bg-primary/10 hover:text-gray-700">
                   <User className="size-5 mr-2" />
                   サンプルユーザ
                 </Button>
