@@ -14,7 +14,6 @@ const recentActivity = [
     action: "がタスクを完了しました",
     item: "ホームページのモックアップデザイン",
     time: "2時間前",
-    emoji: "✅",
   },
   {
     id: 2,
@@ -22,7 +21,6 @@ const recentActivity = [
     action: "がノートを追加しました",
     item: "ミーティングノート - Q1計画",
     time: "4時間前",
-    emoji: "📝",
   },
   {
     id: 3,
@@ -30,7 +28,6 @@ const recentActivity = [
     action: "がファイルをアップロードしました",
     item: "ブランドガイドライン.pdf",
     time: "5時間前",
-    emoji: "📎",
   },
   {
     id: 4,
@@ -38,7 +35,6 @@ const recentActivity = [
     action: "がイベントを作成しました",
     item: "チームスタンドアップ",
     time: "1日前",
-    emoji: "📅",
   },
 ]
 
@@ -94,7 +90,7 @@ export default function TeamHomePage({
             <Link href={`/team/${params.teamId}/tasks`}>
               <Button
                 variant="outline"
-                className="w-full rounded-lg h-auto py-3.5 hover:bg-accent hover:border-primary/20 transition-colors bg-transparent"
+                className="w-full rounded-lg h-auto py-3.5 hover:bg-primary/10 hover:text-gray-700 transition-colors bg-transparent"
               >
                 <div className="flex flex-col items-center gap-1.5">
                   <Plus className="w-5 h-5" />
@@ -105,7 +101,7 @@ export default function TeamHomePage({
             <Link href={`/team/${params.teamId}/notes`}>
               <Button
                 variant="outline"
-                className="w-full rounded-lg h-auto py-3.5 hover:bg-accent hover:border-primary/20 transition-colors bg-transparent"
+                className="w-full rounded-lg h-auto py-3.5 hover:bg-primary/10 hover:text-gray-700 transition-colors bg-transparent"
               >
                 <div className="flex flex-col items-center gap-1.5">
                   <FileText className="w-5 h-5" />
@@ -116,7 +112,7 @@ export default function TeamHomePage({
             <Link href={`/team/${params.teamId}/calendar`}>
               <Button
                 variant="outline"
-                className="w-full rounded-lg h-auto py-3.5 hover:bg-accent hover:border-primary/20 transition-colors bg-transparent"
+                className="w-full rounded-lg h-auto py-3.5 hover:bg-primary/10 hover:text-gray-700 transition-colors bg-transparent"
               >
                 <div className="flex flex-col items-center gap-1.5">
                   <Calendar className="w-5 h-5" />
@@ -138,20 +134,19 @@ export default function TeamHomePage({
             {recentActivity.map((activity) => (
               <div
                 key={activity.id}
-                className="flex items-start gap-3 p-3.5 rounded-lg bg-accent/30 hover:bg-accent/50 transition-colors border border-transparent hover:border-border"
+                className="flex items-start gap-3 p-3.5 rounded-lg bg-secondary/30 hover:bg-primary/10 transition-colors border border-transparent hover:border-border"
               >
                 <Avatar className="w-9 h-9">
-                  <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
+                  <AvatarFallback className="bg-secondary text-sm font-medium">
                     {activity.user.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-foreground">
                     <span className="font-semibold">{activity.user}</span>
-                    <span className="text-muted-foreground">{activity.action}</span>
+                    <span>{activity.action}</span>
                   </p>
                   <p className="text-sm text-muted-foreground mt-0.5 flex items-center gap-2">
-                    <span>{activity.emoji}</span>
                     <span className="truncate">{activity.item}</span>
                   </p>
                 </div>
