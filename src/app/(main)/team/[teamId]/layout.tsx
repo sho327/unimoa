@@ -1,5 +1,5 @@
 // Layout/Components
-import ClientMainTeamLayout from "@/components/layout/client-main-team-layout"
+import ClientMainLayout from "@/components/layout/client-main-layout"
 
 // サーバー側レイアウト
 export default function AuthLayout({ 
@@ -18,8 +18,8 @@ export default function AuthLayout({
      * Template
      */
     return (
-        <ClientMainTeamLayout>
+        <ClientMainLayout>
             {children}
-        </ClientMainTeamLayout>
+        </ClientMainLayout>
     )
 }
