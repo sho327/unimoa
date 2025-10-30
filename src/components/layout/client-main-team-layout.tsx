@@ -6,6 +6,7 @@ import { useParams, usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Sparkles, Home, CheckSquare, FileText, Calendar, FolderOpen, Settings, Users, User, Menu } from "lucide-react"
+import type { Team, NavItem } from "@/components/layout/types"
 // UI/Components
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
@@ -26,9 +27,8 @@ export default function ClientMainTeamLayout({
   const pathname = usePathname()
   const router = useRouter()
   const teamId = params.teamId as string
-  const team = mockTeams[teamId] || { name: "チーム", emoji: "✨" }
-
-  const navItems = [
+  const team: Team = mockTeams[teamId] ? { id: teamId, ...mockTeams[teamId] } : { id: teamId, name: "チーム", emoji: "✨" }
+  const navItems: NavItem[] = [
     { href: `/team/${teamId}`, label: "ホーム", icon: Home },
     { href: `/team/${teamId}/tasks`, label: "タスク", icon: CheckSquare },
     { href: `/team/${teamId}/notes`, label: "ノート", icon: FileText },

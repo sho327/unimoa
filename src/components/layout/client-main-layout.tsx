@@ -18,6 +18,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 // Layout/Components
 import { NotificationDropdown } from "@/components/layout/notification-dropdown"
+import type { Team, NavItem } from "@/components/layout/types"
+import { UserMenuDropdown } from "@/components/layout/user-menu-dropdown"
 
 export default function ClientMainLayout({
   children
@@ -31,9 +33,8 @@ export default function ClientMainLayout({
   const teamId = params.teamId as string | undefined
 
   // チーム情報やナビはteamIdがある時だけセット
-  const team = teamId ? { name: "チーム名が入ります", emoji: "✨" } : null
-  // ここは本来APIやContextから取得する等に修正可能
-  const navItems = teamId
+  const team: Team | null = teamId ? { id: teamId, name: "チーム名が入ります", emoji: "✨" } : null
+  const navItems: NavItem[] = teamId
     ? [
         { href: `/team/${teamId}`, label: "ホーム", icon: require("lucide-react").Home },
         { href: `/team/${teamId}/tasks`, label: "タスク", icon: require("lucide-react").CheckSquare },
@@ -70,58 +71,12 @@ export default function ClientMainLayout({
           {/* 右側: ユーザーメニュー、通知など今後共通化予定 */}
           <div className="flex items-center gap-2">
             <NotificationDropdown 
-              notifications={[]}
-              unreadCount={3}
-              onMarkAsRead={() => {}}
-              onMarkAllAsRead={() => {}}
-              />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant='ghost' size="sm" className="hover:bg-primary/10 hover:text-gray-700">
-                  {/* <User className="size-5 mr-2" /> */}
-                  <Avatar className="w-7.5 h-7.5 mr-1">
-                    <AvatarImage src={''} alt={`${''} icon`} />
-                    <AvatarFallback className="text-sm font-medium bg-secondary">
-                      サ
-                    </AvatarFallback>
-                  </Avatar>
-                  サンプルユーザ1
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>
-                {/* <DropdownMenuLabel>マイアカウント</DropdownMenuLabel> */}
-                  <div className="flex flex-col space-y-2 py-1 px-0.5">
-                      <p className="text-sm font-medium leading-none">サンプルユーザ1</p>
-                      <div className="flex items-center space-x-2">
-                      {/* 入れるか検討中 */}
-                      {/* <p className="text-xs leading-none text-muted-foreground">⭐ レベル 50</p>
-                      <Badge className="text-xs bg-gradient-to-r from-yellow-400 to-orange-500 text-white border-0">
-                          👑 Premium
-                      </Badge> */}
-                      </div>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild className="hover:bg-primary/10 hover:text-gray-700">
-                  <Link href="/profile" className="cursor-pointer">
-                    <User className="h-4 w-4 mr-2" />
-                    プロフィール
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild className="hover:bg-primary/10 hover:text-gray-700">
-                  <Link href="#" className="cursor-pointer">
-                    <User className="h-4 w-4 mr-2" />
-                    ログアウト
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className="h-4 w-4 mr-2" />
-                  チーム選択に戻る
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                notifications={[]}
+                unreadCount={3}
+                onMarkAsRead={() => {}}
+                onMarkAllAsRead={() => {}}
+                />
+            <UserMenuDropdown userName="サンプルユーザ1" onLogout={handleLogout} />
           </div>
         </div>
       </header>
