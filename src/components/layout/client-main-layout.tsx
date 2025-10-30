@@ -14,6 +14,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 // Layout/Components
 import { NotificationDropdown } from "@/components/layout/notification-dropdown"
 
@@ -49,12 +51,30 @@ export default function ClientMainLayout({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant='ghost' size="sm" className="hover:bg-primary/10 hover:text-gray-700">
-                  <User className="size-5 mr-2" />
-                  サンプルユーザ
+                  {/* <User className="size-5 mr-2" /> */}
+                  <Avatar className="w-7.5 h-7.5 mr-1">
+                    <AvatarImage src={''} alt={`${''} icon`} />
+                    <AvatarFallback className="text-sm font-medium bg-secondary">
+                      サ
+                    </AvatarFallback>
+                  </Avatar>
+                  サンプルユーザ1
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>マイアカウント</DropdownMenuLabel>
+                <DropdownMenuLabel>
+                {/* <DropdownMenuLabel>マイアカウント</DropdownMenuLabel> */}
+                  <div className="flex flex-col space-y-2 py-1 px-0.5">
+                      <p className="text-sm font-medium leading-none">サンプルユーザ1</p>
+                      <div className="flex items-center space-x-2">
+                      {/* 入れるか検討中 */}
+                      {/* <p className="text-xs leading-none text-muted-foreground">⭐ レベル 50</p>
+                      <Badge className="text-xs bg-gradient-to-r from-yellow-400 to-orange-500 text-white border-0">
+                          👑 Premium
+                      </Badge> */}
+                      </div>
+                  </div>
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild className="hover:bg-primary/10 hover:text-gray-700">
                   <Link href="/profile" className="cursor-pointer">
@@ -75,12 +95,6 @@ export default function ClientMainLayout({
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            {/* <Link href="/profile">
-              <Button variant="ghost" size="sm" className="text-sm">
-                <User className="w-4 h-4 mr-1.5" />
-                プロフィール
-              </Button>
-            </Link> */}
           </div>
         </div>
       </header>

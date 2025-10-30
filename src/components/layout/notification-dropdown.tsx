@@ -103,7 +103,7 @@ export function NotificationDropdown({
             {/* ドロップダウントリガー */}
             <DropdownMenuTrigger asChild>
                 <Button variant='ghost' size="sm" className="relative hover:bg-primary/10 hover:text-gray-700">
-                    <Bell className="size-4" />
+                    <Bell className="size-4.5" />
                     {unreadCount > 0 && (
                         <Badge className="absolute -top-0 -right-0 w-3 h-3 p-1 bg-red-500 text-white text-xs flex items-center justify-center">
                             {unreadCount > 99 ? "99+" : unreadCount}

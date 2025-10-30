@@ -89,6 +89,7 @@ export default function ClientMainTeamLayout({
               </div>
               <span className="text-xl font-bold text-foreground">Unimoa</span>
             </Link>
+            <div className="hidden md:block h-4 w-px bg-gray-300" />
             <div className="hidden md:flex items-center gap-1.5 px-2 bg-transparent">
               <span className="font-semibold text-foreground text-sm">{team.name}</span>
             </div>
