@@ -80,6 +80,16 @@ export default function TeamHomePage({
         })}
       </div>
 
+      {/* <Card className="mb-5">
+        <CardHeader>
+          <CardTitle className="text-lg">今日の予定</CardTitle>
+          <CardDescription className="text-sm">今日の予定を確認</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">今日の予定はありません</p>
+        </CardContent>
+      </Card> */}
+
       <Card className="border-border rounded-xl shadow-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg">クイックアクション</CardTitle>

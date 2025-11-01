@@ -3,7 +3,7 @@
 import type React from "react"
 import Link from "next/link"
 import { useRouter, useParams, usePathname } from "next/navigation"
-import { Sparkles, User, LogOut, Building2, ChevronDown, Plus, Crown, Check, Users } from "lucide-react"
+import { Sparkles, User, LogOut, Building2, ChevronDown, Plus, Crown, Check, Users, CheckCircle, CheckSquare, CheckSquare2 } from "lucide-react"
 // UI/Components
 import {
   DropdownMenu,
@@ -38,7 +38,7 @@ export default function ClientMainLayout({
   const navItems: NavItem[] = teamId
     ? [
         { href: `/home`, label: "ホーム", icon: require("lucide-react").Home },
-        { href: `/tasks`, label: "タスク", icon: require("lucide-react").CheckSquare },
+        { href: `/tasks`, label: "タスク", icon: require("lucide-react").CheckCircle },
         { href: `/reports`, label: "日報", icon: require("lucide-react").FileText },
         // { href: `/calendar`, label: "カレンダー", icon: require("lucide-react").Calendar },
         // { href: `/files`, label: "ファイル", icon: require("lucide-react").FolderOpen },
@@ -62,9 +62,9 @@ export default function ClientMainLayout({
           <div className="flex items-center gap-3">
             <Link href="/teams" className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-sm">
-                <Sparkles className="w-5 h-5 text-primary-foreground" />
+                <CheckCircle className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold text-foreground">Unimoa</span>
+              <span className="text-xl font-bold text-foreground">Tasrepo</span>
             </Link>
             {/* チーム名はteamIdがある時だけ表示 */}
             {/* {team && (
@@ -80,7 +80,7 @@ export default function ClientMainLayout({
                 <Button
                   variant="outline"
                   className="justify-between border-gray-200 bg-white hover:bg-gray-50 rounded-lg"
-                >
+                  >
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4 text-gray-600" />
                     <span className="truncate text-gray-700">

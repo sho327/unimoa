@@ -24,11 +24,11 @@
   --border: #dfe6e9;
   --input: #dfe6e9;
   --ring: #18bc9c;
-  --chart-1: #18bc9c;
-  --chart-2: #3498db;
-  --chart-3: #9b59b6;
-  --chart-4: #f39c12;
-  --chart-5: #e74c3c;
+  --chart-1: #18bc9c; /* PrimaryColor(primary): ホーム */
+  --chart-2: #3498db; /* InfoColor(accent): タスク */
+  --chart-3: #9b59b6; /* OtherColor:  */
+  --chart-4: #f39c12; /* WarningColor:  */
+  --chart-5: #e74c3c; /* DangerColor(destructive):  */
   /* Using rounded-sm (0.125rem) as specified */
   --radius: 0.125rem;
   --sidebar: #ffffff;
