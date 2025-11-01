@@ -3,5 +3,5 @@ export type User = {
     name: string
     email: string
     avatarUrl?: string
-    createdAt: string
+    createdAt: Date
 }

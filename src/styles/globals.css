@@ -125,3 +125,40 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+  10% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  90% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -20px);
+    opacity: 0;
+  }
+}
+
+.animate-sway {
+  animation: sway 1.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.animate-slideDown {
+  animation: slideDown 3s ease-in-out forwards;
+}

@@ -1,8 +1,9 @@
 "use client"
-
+// Modules
 import type React from "react"
-
 import { useState } from "react"
+import { Plus, MoreVertical } from "lucide-react"
+// UI/Components
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -18,70 +19,32 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Plus, MoreVertical } from "lucide-react"
 // Layout/Components
 import PageHeader from "@/components/layout/page-header"
+// Types
+import { Task, TaskStatus } from "@/types"
 
-type Task = {
-  id: number
-  title: string
-  emoji: string
-  status: "todo" | "in-progress" | "done"
-  priority: "low" | "medium" | "high"
-  tags: string[]
-  assignee: string
-  dueDate?: string
-}
-
-// Mock tasks data
+// モックデータ
 const mockTasks: Task[] = [
   {
-    id: 1,
-    title: "ホームページのモックアップデザイン",
-    emoji: "🎨",
-    status: "done",
-    priority: "high",
-    tags: ["デザイン", "UI"],
-    assignee: "アリス",
-    dueDate: "2024-03-15",
+    id: '1',
+    groupId: '1',
+    title: 'ホームページ/モックデザイン',
+    description: 'ホームページのモックアップデザイン',
+    assigneeId: '1',
+    status: 'todo',
+    createdAt: new Date('2025/11/01 00:00:00'),
+    updatedAt: new Date('2025/11/01 00:00:00'),
   },
   {
-    id: 2,
-    title: "ユーザー認証の実装",
-    emoji: "🔐",
-    status: "in-progress",
-    priority: "high",
-    tags: ["バックエンド", "セキュリティ"],
-    assignee: "ボブ",
-    dueDate: "2024-03-20",
-  },
-  {
-    id: 3,
-    title: "ドキュメント作成",
-    emoji: "📝",
-    status: "todo",
-    priority: "medium",
-    tags: ["ドキュメント"],
-    assignee: "キャロル",
-  },
-  {
-    id: 4,
-    title: "CI/CDパイプラインのセットアップ",
-    emoji: "⚙️",
-    status: "todo",
-    priority: "medium",
-    tags: ["DevOps"],
-    assignee: "デビッド",
-  },
-  {
-    id: 5,
-    title: "マーケティング資料作成",
-    emoji: "📢",
-    status: "in-progress",
-    priority: "low",
-    tags: ["マーケティング"],
-    assignee: "イブ",
-    dueDate: "2024-03-25",
+    id: '2',
+    groupId: '1',
+    title: 'タスクページ/モックデザイン',
+    description: 'タスクページのモックアップデザイン',
+    assigneeId: '1',
+    status: 'todo',
+    createdAt: new Date('2025/11/01 00:00:00'),
+    updatedAt: new Date('2025/11/01 00:00:00'),
   },
 ]
 
@@ -90,44 +53,43 @@ export default function TasksPage() {
   const [isCreateOpen, setIsCreateOpen] = useState(false)
   const [newTask, setNewTask] = useState({
     title: "",
-    emoji: "✨",
-    priority: "medium" as const,
-    tags: "",
+    description: "",
+    status: "todo",
   })
 
   const handleCreateTask = (e: React.FormEvent) => {
-    e.preventDefault()
-    const task: Task = {
-      id: tasks.length + 1,
-      title: newTask.title,
-      emoji: newTask.emoji,
-      status: "todo",
-      priority: newTask.priority,
-      tags: newTask.tags.split(",").map((t) => t.trim()),
-      assignee: "あなた",
-    }
-    setTasks([...tasks, task])
-    setIsCreateOpen(false)
-    setNewTask({ title: "", emoji: "✨", priority: "medium", tags: "" })
+    // e.preventDefault()
+    // const task: Task = {
+    //   id: tasks.length + 1,
+    //   title: newTask.title,
+    //   emoji: newTask.emoji,
+    //   status: "todo",
+    //   priority: newTask.priority,
+    //   tags: newTask.tags.split(",").map((t) => t.trim()),
+    //   assignee: "あなた",
+    // }
+    // setTasks([...tasks, task])
+    // setIsCreateOpen(false)
+    // setNewTask({ title: "", emoji: "✨", priority: "medium", tags: "" })
   }
 
   const toggleTaskStatus = (taskId: number) => {
-    setTasks(
-      tasks.map((task) => {
-        if (task.id === taskId) {
-          const statusOrder: Task["status"][] = ["todo", "in-progress", "done"]
-          const currentIndex = statusOrder.indexOf(task.status)
-          const nextStatus = statusOrder[(currentIndex + 1) % statusOrder.length]
-          return { ...task, status: nextStatus }
-        }
-        return task
-      }),
-    )
+    // setTasks(
+    //   tasks.map((task) => {
+    //     if (task.id === taskId) {
+    //       const statusOrder: Task["status"][] = ["todo", "in-progress", "done"]
+    //       const currentIndex = statusOrder.indexOf(task.status)
+    //       const nextStatus = statusOrder[(currentIndex + 1) % statusOrder.length]
+    //       return { ...task, status: nextStatus }
+    //     }
+    //     return task
+    //   }),
+    // )
   }
 
-  const todoTasks = tasks.filter((t) => t.status === "todo")
-  const inProgressTasks = tasks.filter((t) => t.status === "in-progress")
-  const doneTasks = tasks.filter((t) => t.status === "done")
+  const todoTasks = tasks.filter((task: Task) => task.status === "todo")
+  const inProgressTasks = tasks.filter((task: Task) => task.status === "in_progress")
+  const doneTasks = tasks.filter((task: Task) => task.status === "completed")
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
@@ -137,6 +99,7 @@ export default function TasksPage() {
         pageDescription="チームのタスクを管理して進捗を追跡"
         isBackButton={false}
       >
+        {/* 新規タスク作成ボタン */}
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
             <Button className="rounded-lg shadow-sm">

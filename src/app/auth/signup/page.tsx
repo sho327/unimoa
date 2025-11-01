@@ -20,15 +20,15 @@ export default function SignupPage() {
     e.preventDefault()
     // Mock signup - in production, this would create an account
     if (name && email && password) {
-      router.push("/teams")
+      router.push("/home")
     }
   }
 
   return (
     <>
       {/* 新規登録/カード */}
-      <Card className="border-border rounded-3xl">
-        <CardHeader className="space-y-2 text-center">
+      <Card className="border-border rounded-xl">
+        <CardHeader className="space-y-0.5 text-center">
           <CardTitle className="text-2xl">アカウント作成</CardTitle>
           <CardDescription>今日からチームでコラボレーションを始めましょう</CardDescription>
         </CardHeader>
@@ -43,7 +43,7 @@ export default function SignupPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="rounded-xl"
+                className="rounded-lg"
               />
             </div>
             <div className="space-y-2">
@@ -55,7 +55,7 @@ export default function SignupPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="rounded-xl"
+                className="rounded-lg"
               />
             </div>
             <div className="space-y-2">
@@ -67,10 +67,10 @@ export default function SignupPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="rounded-xl"
+                className="rounded-lg"
               />
             </div>
-            <Button type="submit" className="w-full rounded-xl" size="lg">
+            <Button type="submit" className="font-semibold w-full rounded-lg" size="lg">
               アカウント作成
             </Button>
           </form>

@@ -1,4 +1,4 @@
-import Tasks from "@/components/page/main/team/tasks"
+import Tasks from "@/components/page/main/tasks"
 
 export default function TasksPage() {
   return <Tasks />

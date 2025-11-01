@@ -8,7 +8,7 @@ import Link from "next/link"
 // Layout/Components
 import PageHeader from "@/components/layout/page-header"
 
-// Mock recent activity data
+// モックデータ
 const recentActivity = [
   {
     id: 1,
