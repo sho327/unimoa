@@ -28,7 +28,7 @@ export default function SignupPage() {
         <>
             {/* 新規登録/カード */}
             <Card className="border-border rounded-xl">
-                <CardHeader className="space-y-0.5 text-center">
+                <CardHeader className="space-y-1 text-center">
                     <CardTitle className="text-2xl">アカウント作成</CardTitle>
                     <CardDescription>
                         今日からチームでコラボレーションを始めましょう

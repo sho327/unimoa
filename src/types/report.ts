@@ -1,4 +1,4 @@
-export type Report = {
+export interface Report {
     id: string
     groupId: string
     userId: string

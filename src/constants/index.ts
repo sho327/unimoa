@@ -1,3 +1,3 @@
-export * from './APP_INFO'
-export * from './PAGE_ROUTES'
-export * from './MESSAGES'
+export * from './app-info'
+export * from './page-routes'
+export * from './messages'

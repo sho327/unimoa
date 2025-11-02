@@ -11,16 +11,16 @@ interface TaskTableProps {
 
 export default function TaskTable({ tasks, onToggleStatus }: TaskTableProps) {
     return (
-        <div className="rounded-md border bg-white shadow-sm">
+        <div className="rounded-lg border bg-white shadow-sm">
             <Table>
                 <TableHeader style={{ backgroundColor: '#2C3E50' }}>
                     <TableRow className="hover:bg-[#2C3E50]">
-                        <TableHead className="w-12 rounded-tl-md"></TableHead>
+                        <TableHead className="w-12 rounded-tl-lg"></TableHead>
                         <TableHead className="font-semibold text-white">タスク名</TableHead>
                         <TableHead className="font-semibold text-white">説明</TableHead>
                         <TableHead className="font-semibold text-white">ステータス</TableHead>
                         <TableHead className="font-semibold text-white">作成日</TableHead>
-                        <TableHead className="w-12 rounded-tr-md"></TableHead>
+                        <TableHead className="w-12 rounded-tr-lg"></TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

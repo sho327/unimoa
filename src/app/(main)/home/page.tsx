@@ -1,5 +1,15 @@
+// Page/Components
 import Home from '@/components/page/main/home'
 
-export default function HomePage({ params }: { params: { teamId: string } }) {
-    return <Home params={params} />
+/**
+ * ホームページ
+ * @args
+ * @createdBy KatoShogo
+ * @createdAt 2025/11/02
+ */
+export default function HomePage() {
+    // ============================================================================
+    // テンプレート（Template）
+    // ============================================================================
+    return <Home />
 }

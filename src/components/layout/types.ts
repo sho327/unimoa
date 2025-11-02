@@ -24,11 +24,11 @@ export type Team = {
     emoji?: string
 }
 
-export type NavItem = {
-    href: string
-    label: string
-    icon: any // Lucideアイコン型を共通化したい場合はimport型名指定もOK
-}
+// export type NavItem = {
+//     href: string
+//     label: string
+//     icon: any // Lucideアイコン型を共通化したい場合はimport型名指定もOK
+// }
 
 export interface TeamParams {
     teamId: string

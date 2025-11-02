@@ -1,4 +1,4 @@
-export type WorkLog = {
+export interface WorkLog {
     id: string
     taskId: string
     userId: string

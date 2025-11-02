@@ -65,7 +65,7 @@ export default function CreateModal({ isOpen, onOpenChange, onSubmit }: CreateMo
                     新しいタスク
                 </Button>
             </DialogTrigger>
-            <DialogContent className="rounded-xl">
+            <DialogContent className="rounded-lg">
                 <DialogHeader>
                     <DialogTitle>新しいタスクを作成</DialogTitle>
                     <DialogDescription className="text-sm">

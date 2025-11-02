@@ -47,13 +47,7 @@ const quickStats = [
     { label: '進捗率', value: '68%', icon: TrendingUp, color: 'text-chart-4' },
 ]
 
-export default function TeamHomePage({
-    params,
-}: {
-    params: {
-        teamId: string
-    }
-}) {
+export default function HomePage() {
     return (
         <div className="mx-auto max-w-7xl space-y-6">
             {/* ページヘッダー */}

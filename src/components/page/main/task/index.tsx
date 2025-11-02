@@ -9,7 +9,6 @@ import { Task, TaskStatus } from '@/types'
 // Page/Components
 import CreateModal from './create-modal'
 import TaskTable from './task-table'
-import TaskCardList from './task-card-list'
 // ================================================
 // モックデータ
 // ================================================
@@ -57,6 +56,9 @@ export default function TasksPage() {
         )
     }
 
+    // ============================================================================
+    // テンプレート（Template）
+    // ============================================================================
     return (
         <div className="mx-auto max-w-7xl space-y-6">
             <PageHeader
@@ -66,6 +68,7 @@ export default function TasksPage() {
                 pageDescription="チームのタスクを管理して進捗を追跡"
                 isBackButton={false}
             >
+                {/* タスク新規作成モーダル */}
                 <CreateModal
                     isOpen={isCreateModalOpen}
                     onOpenChange={setIsCreateModalOpen}
@@ -73,12 +76,7 @@ export default function TasksPage() {
                 />
             </PageHeader>
 
-            {/* 表示タイプに応じて切り替え */}
-            {listType === 'table' ? (
-                <TaskTable tasks={tasks} onToggleStatus={toggleTaskStatus} />
-            ) : (
-                <TaskCardList tasks={tasks} onToggleStatus={toggleTaskStatus} />
-            )}
+            <TaskTable tasks={tasks} onToggleStatus={toggleTaskStatus} />
         </div>
     )
 }

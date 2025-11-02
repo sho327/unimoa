@@ -4,26 +4,35 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 // Privider/Components
 import { ThemeProviderWrapper } from '@/components/providers/theme-provider-wrapper'
-// Global/CSS
-import '@/styles/globals.css'
-// Global/CSS
-import { APP_INFO } from '@/constants'
 // Layout/Components
 import LoadingOverlay from '@/components/layout/loading-overlay'
+// Global/CSS
+import '@/styles/globals.css'
+// Constants
+import { appInfo } from '@/constants'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-    title: APP_INFO.APP_NAME,
-    description: APP_INFO.APP_NAME,
-    generator: APP_INFO.GENERATOR,
+    title: appInfo.APP_NAME,
+    description: appInfo.APP_NAME,
+    generator: appInfo.GENERATOR,
 }
 
+/**
+ * 共通レイアウト
+ * @args
+ * @createdBy KatoShogo
+ * @createdAt 2025/11/02
+ */
 export default function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode
 }>) {
+    // ============================================================================
+    // テンプレート（Template）
+    // ============================================================================
     return (
         <html lang="ja" suppressHydrationWarning>
             <body className={`${inter.className} font-sans antialiased`}>
@@ -36,6 +45,7 @@ export default function RootLayout({
         </html>
     )
 }
+
 /**
   コンポーネント内でテーマを切り替える場合：
   Apply to layout.tsx

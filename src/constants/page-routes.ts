@@ -1,5 +1,5 @@
 /** ページルート一覧 */
-export const PAGE_ROUTES = {
+export const pageRoutes = {
     TOP: `/`,
     AUTH: {
         LOGIN: `/login`,

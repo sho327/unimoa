@@ -1,6 +1,6 @@
 export type NotificationType = 'task' | 'report' | 'system' | 'comment'
 
-export type Notification = {
+export interface Notification {
     id: string
     groupId?: string // グループ内通知（任意）
     userId: string // 受信者（誰宛か）

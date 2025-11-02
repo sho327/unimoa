@@ -1,15 +1,15 @@
-// Layout/Components
-import ClientAuthLayout from '@/components/layout/client-auth-layout'
+// Page/Components
+import Task from '@/components/page/main/task'
 
 /**
- * 認証レイアウト
+ * タスクページ
  * @args
  * @createdBy KatoShogo
  * @createdAt 2025/11/02
  */
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function TaskPage() {
     // ============================================================================
     // テンプレート（Template）
     // ============================================================================
-    return <ClientAuthLayout>{children}</ClientAuthLayout>
+    return <Task />
 }

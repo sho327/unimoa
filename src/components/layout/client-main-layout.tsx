@@ -1,17 +1,18 @@
 'use client'
 // Modules
 import type React from 'react'
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, useParams, usePathname } from 'next/navigation'
 import {
-    Sparkles,
-    User,
-    LogOut,
-    Building2,
+    // Sparkles,
+    // User,
+    // LogOut,
+    // Building2,
     ChevronDown,
     Plus,
-    Crown,
-    Check,
+    // Crown,
+    // Check,
     Users,
     CheckCircle,
 } from 'lucide-react'
@@ -31,38 +32,81 @@ import { Badge } from '@/components/ui/badge'
 import { NotificationDropdown } from '@/components/layout/notification-dropdown'
 import { UserMenuDropdown } from '@/components/layout/user-menu-dropdown'
 // Types
-import type { Team, NavItem } from '@/components/layout/types'
-// Types
+import type { LayoutNavItem } from '@/types'
+import type { Team } from '@/components/layout/types'
+// Constants
+import { appInfo } from '@/constants'
+// Store
+import { useUserStore } from '@/store/user'
+import { useGroupStore } from '@/store/group'
+// Hooks
 import { useMount } from '@/hooks/use-mount'
+// Types
+import type { User } from '@/types'
 
+type Props = {
+    children: React.ReactNode
+    user: User | null
+}
 /**
  * メインレイアウトコンポーネント(クライアントコンポーネント)
  * @args
  * @createdBy KatoShogo
  * @createdAt 2025/11/02
  */
-export default function ClientMainLayout({ children }: { children: React.ReactNode }) {
+export default function ClientMainLayout({ children, user }: Props) {
     // ============================================================================
-    // 変数（Constant Management）
+    // ローカル状態（LocalState）
     // ============================================================================
-    // Constants: 変数
-    // - router  : ルーター
-    // - pathname: 現在のパス名
+
+    // ============================================================================
+    // グローバル状態（GlobalState）
+    // ============================================================================
+    const { setUser } = useUserStore()
+    const group = useGroupStore((s) => s.group)
+
+    // ============================================================================
+    // 変数（Constant）
+    // ============================================================================
     const router = useRouter()
     const pathname = usePathname()
-
-    useMount(() => {
-        console.log('Tasrepoを起動しました 🚀')
-    })
     // チームIDがあるか判定
     // const teamId = params.teamId as string | undefined
     const teamId = '1'
+    const groups = [
+        { id: '1', name: '個人グループ', description: '個人用グループ', role: 'owner' },
+        { id: '2', name: 'Unimoa開発', description: 'Unimoa開発', role: 'admin' },
+        // { id: "3", name: "マーケティング", description: "マーケティング部門", role: "member" },
+    ]
 
+    // ============================================================================
+    // 初期描画時の処理（Mounted）
+    // ============================================================================
+    useMount(() => {
+        console.log(group)
+        console.log('Tasrepoを起動しました 🚀')
+    })
+
+    useEffect(() => {
+        if (user) setUser(user)
+        else setUser(null)
+    }, [user, setUser])
+
+    // ============================================================================
+    // アクション処理（Action）
+    // ============================================================================
+    const handleLogout = () => {
+        router.push('/auth/login')
+    }
+
+    // ============================================================================
+    // 算出プロパティ（Computed）
+    // ============================================================================
     // チーム情報やナビはteamIdがある時だけセット
     const team: Team | null = teamId
         ? { id: teamId, name: 'チーム名が入ります', emoji: '✨' }
         : null
-    const navItems: NavItem[] = teamId
+    const navItems: LayoutNavItem[] = teamId
         ? [
               { href: `/home`, label: 'ホーム', icon: require('lucide-react').Home },
               { href: `/tasks`, label: 'タスク', icon: require('lucide-react').CheckCircle },
@@ -74,14 +118,6 @@ export default function ClientMainLayout({ children }: { children: React.ReactNo
           ]
         : []
 
-    const handleLogout = () => {
-        router.push('/teams')
-    }
-    const groups = [
-        { id: '1', name: '個人グループ', description: '個人用グループ', role: 'owner' },
-        { id: '2', name: 'Unimoa開発', description: 'Unimoa開発', role: 'admin' },
-        // { id: "3", name: "マーケティング", description: "マーケティング部門", role: "member" },
-    ]
     // ============================================================================
     // テンプレート（コンポーネント描画処理）
     // ============================================================================
@@ -94,15 +130,17 @@ export default function ClientMainLayout({ children }: { children: React.ReactNo
                             <div className="bg-primary flex h-9 w-9 items-center justify-center rounded-xl shadow-sm">
                                 <CheckCircle className="text-primary-foreground h-5 w-5" />
                             </div>
-                            <span className="text-foreground text-xl font-bold">Tasrepo</span>
+                            <span className="text-foreground text-xl font-bold">
+                                {appInfo.APP_NAME}
+                            </span>
                         </Link>
                         {/* チーム名はteamIdがある時だけ表示 */}
                         {/* {team && (
-              <>
-                <div className="hidden md:block h-4 w-px bg-gray-300 mx-2" />
-                <span className="hidden md:inline font-semibold text-foreground text-sm">{team.name}</span>
-              </>
-            )} */}
+                            <>
+                                <div className="hidden md:block h-4 w-px bg-gray-300 mx-2" />
+                                <span className="hidden md:inline font-semibold text-foreground text-sm">{team.name}</span>
+                            </>
+                        )} */}
                         <div className="mx-2 hidden h-4 w-px bg-gray-300 md:block" />
                         {/* グループ選択 */}
                         <DropdownMenu>
@@ -138,7 +176,7 @@ export default function ClientMainLayout({ children }: { children: React.ReactNo
                                         className="flex cursor-pointer items-center justify-between rounded-lg"
                                     >
                                         <div className="flex items-center gap-2">
-                                            <Building2 className="h-4 w-4 text-gray-500" />
+                                            <Users className="h-4 w-4 text-gray-500" />
                                             <div>
                                                 <p className="font-medium text-gray-900">
                                                     {group.name}
@@ -182,7 +220,7 @@ export default function ClientMainLayout({ children }: { children: React.ReactNo
                             onMarkAsRead={() => {}}
                             onMarkAllAsRead={() => {}}
                         />
-                        <UserMenuDropdown userName="サンプルユーザ1" onLogout={handleLogout} />
+                        <UserMenuDropdown userName={user?.name} onLogout={handleLogout} />
                     </div>
                 </div>
             </header>

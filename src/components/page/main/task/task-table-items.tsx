@@ -1,12 +1,15 @@
 'use client'
-
+// Modules
 import { MoreVertical } from 'lucide-react'
+// UI/Components
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { TableCell, TableRow } from '@/components/ui/table'
+// Types
 import { Task, TaskStatus } from '@/types'
 
+// Interface
 interface TaskTableItemsProps {
     tasks: Task[]
     onToggleStatus?: (taskId: string) => void
