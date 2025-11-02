@@ -1,12 +1,8 @@
 // Layout/Components
-import ClientMainLayout from "@/components/layout/client-main-layout"
+import ClientMainLayout from '@/components/layout/client-main-layout'
 
 // サーバー側レイアウト
-export default function MainLayout({ 
-  children 
-}: { 
-  children: React.ReactNode 
-}) {
+export default function MainLayout({ children }: { children: React.ReactNode }) {
     /**
      * Variable
      */
@@ -17,9 +13,5 @@ export default function MainLayout({
     /**
      * Template
      */
-    return (
-        <ClientMainLayout>
-            {children}
-        </ClientMainLayout>
-    )
+    return <ClientMainLayout>{children}</ClientMainLayout>
 }

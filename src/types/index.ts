@@ -6,7 +6,7 @@
  *   •status: 'invited' にしておき、承認時に 'active' に更新
  * •退会処理
  *   •status: 'removed' に変更（論理削除的に扱う）
-*/
+ */
 
 export * from './user'
 export * from './group'
@@ -15,5 +15,3 @@ export * from './task'
 export * from './worklog'
 export * from './report'
 export * from './notification'
-
-

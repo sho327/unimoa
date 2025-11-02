@@ -1,13 +1,8 @@
 // Layout/Components
-import ClientAuthLayout from "@/components/layout/client-auth-layout"
-import LoadingOverlay from "@/components/layout/loading-overlay"
+import ClientAuthLayout from '@/components/layout/client-auth-layout'
 
 // サーバー側レイアウト
-export default function AuthLayout({ 
-  children 
-}: { 
-  children: React.ReactNode 
-}) {
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
     /**
      * Variable
      */
@@ -18,11 +13,5 @@ export default function AuthLayout({
     /**
      * Template
      */
-    return (
-        <ClientAuthLayout>
-            {children}
-            {/* ローディングオーバーレイ */}
-            <LoadingOverlay />
-        </ClientAuthLayout>
-    )
+    return <ClientAuthLayout>{children}</ClientAuthLayout>
 }

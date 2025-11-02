@@ -1,5 +1,5 @@
-import Home from "@/components/page/main/home"
+import Home from '@/components/page/main/home'
 
 export default function HomePage({ params }: { params: { teamId: string } }) {
-  return <Home params={params} />
+    return <Home params={params} />
 }

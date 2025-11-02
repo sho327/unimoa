@@ -1,71 +1,72 @@
-"use client"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { CheckSquare, FileText, Calendar, TrendingUp, Plus, Home, CheckCircle } from "lucide-react"
-import { UsersRound } from "lucide-react"
-import Link from "next/link"
+'use client'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { CheckSquare, FileText, Calendar, TrendingUp, Plus, Home, CheckCircle } from 'lucide-react'
+import { UsersRound } from 'lucide-react'
+import Link from 'next/link'
 // Layout/Components
-import PageHeader from "@/components/layout/page-header"
+import PageHeader from '@/components/layout/page-header'
 
 // モックデータ
 const recentActivity = [
-  {
-    id: 1,
-    user: "アリス",
-    action: "がタスクを完了しました",
-    item: "ホームページのモックアップデザイン",
-    time: "2時間前",
-  },
-  {
-    id: 2,
-    user: "ボブ",
-    action: "がノートを追加しました",
-    item: "ミーティングノート - Q1計画",
-    time: "4時間前",
-  },
-  {
-    id: 3,
-    user: "キャロル",
-    action: "がファイルをアップロードしました",
-    item: "ブランドガイドライン.pdf",
-    time: "5時間前",
-  },
-  {
-    id: 4,
-    user: "デビッド",
-    action: "がイベントを作成しました",
-    item: "チームスタンドアップ",
-    time: "1日前",
-  },
+    {
+        id: 1,
+        user: 'アリス',
+        action: 'がタスクを完了しました',
+        item: 'ホームページのモックアップデザイン',
+        time: '2時間前',
+    },
+    {
+        id: 2,
+        user: 'ボブ',
+        action: 'がノートを追加しました',
+        item: 'ミーティングノート - Q1計画',
+        time: '4時間前',
+    },
+    {
+        id: 3,
+        user: 'キャロル',
+        action: 'がファイルをアップロードしました',
+        item: 'ブランドガイドライン.pdf',
+        time: '5時間前',
+    },
+    {
+        id: 4,
+        user: 'デビッド',
+        action: 'がイベントを作成しました',
+        item: 'チームスタンドアップ',
+        time: '1日前',
+    },
 ]
 
 const quickStats = [
-  { label: "進行中のタスク", value: "12", icon: CheckCircle, color: "text-primary" },
-  { label: "ノート", value: "8", icon: FileText, color: "text-chart-2" },
-  { label: "日報", value: "5", icon: Calendar, color: "text-chart-3" },
-  { label: "進捗率", value: "68%", icon: TrendingUp, color: "text-chart-4" },
+    { label: '進行中のタスク', value: '12', icon: CheckCircle, color: 'text-primary' },
+    { label: 'ノート', value: '8', icon: FileText, color: 'text-chart-2' },
+    { label: '日報', value: '5', icon: Calendar, color: 'text-chart-3' },
+    { label: '進捗率', value: '68%', icon: TrendingUp, color: 'text-chart-4' },
 ]
 
 export default function TeamHomePage({
-   params 
-} : { 
-  params: {
-    teamId: string
-  }
+    params,
+}: {
+    params: {
+        teamId: string
+    }
 }) {
-  return (
-    <div className="space-y-6 max-w-7xl mx-auto">
-      {/* ページヘッダー */}
-      <PageHeader 
-        Icon={Home}
-        pageTitle="チームホーム"
-        pageDescription="おかえりなさい！チームの最新情報をチェックしましょう"
-        isBackButton={false}
-      />
+    return (
+        <div className="mx-auto max-w-7xl space-y-6">
+            {/* ページヘッダー */}
+            <PageHeader
+                Icon={Home}
+                iconVariant="home"
+                pageTitle="チームホーム"
+                pageDescription="おかえりなさい！チームの最新情報をチェックしましょう"
+                isBackButton={false}
+            />
 
-      {/* InfoBoxs */}
-      {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {/* InfoBoxs */}
+            {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {quickStats.map((stat) => {
           const Icon = stat.icon
           return (
@@ -84,7 +85,7 @@ export default function TeamHomePage({
         })}
       </div> */}
 
-      {/* <Card className="mb-5">
+            {/* <Card className="mb-5">
         <CardHeader>
           <CardTitle className="text-lg">今日の予定</CardTitle>
           <CardDescription className="text-sm">今日の予定を確認</CardDescription>
@@ -94,7 +95,7 @@ export default function TeamHomePage({
         </CardContent>
       </Card> */}
 
-      {/* <Card className="border-border rounded-xl shadow-sm">
+            {/* <Card className="border-border rounded-xl shadow-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg">クイックアクション</CardTitle>
           <CardDescription className="text-sm">よく使う操作にすばやくアクセス</CardDescription>
@@ -138,7 +139,7 @@ export default function TeamHomePage({
         </CardContent>
       </Card> */}
 
-      {/* <Card className="border-border rounded-xl shadow-sm">
+            {/* <Card className="border-border rounded-xl shadow-sm">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg">最近のアクティビティ</CardTitle>
           <CardDescription className="text-sm">チームの活動状況を確認</CardDescription>
@@ -170,6 +171,6 @@ export default function TeamHomePage({
           </div>
         </CardContent>
       </Card> */}
-    </div>
-  )
+        </div>
+    )
 }

@@ -1,17 +1,17 @@
-import { useEffect } from "react";
+import { useEffect } from 'react'
 
 /**
  * useMount — マウント時1回だけ処理する
- * @args 
+ * @args
  * @createdBy KatoShogo
  * @createdAt 2025/11/02
-*/
+ */
 export const useMount = (fn: () => void) => {
     useEffect(() => {
-        fn();
+        fn()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-};
+    }, [])
+}
 
 // ============================================================================
 // 使用例

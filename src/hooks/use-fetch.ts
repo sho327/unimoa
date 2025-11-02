@@ -1,31 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 
 /**
  * useFetch — 非同期データ取得（ローディング付き）
- * @args 
+ * @args
  * @createdBy KatoShogo
  * @createdAt 2025/11/02
-*/
+ */
 export function useFetch<T>(fetcher: () => Promise<T>) {
-    const [data, setData] = useState<T | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<Error | null>(null);
+    const [data, setData] = useState<T | null>(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<Error | null>(null)
 
     useEffect(() => {
-        let isMounted = true;
-        setLoading(true);
+        let isMounted = true
+        setLoading(true)
 
         fetcher()
             .then((res) => isMounted && setData(res))
             .catch((err) => isMounted && setError(err))
-            .finally(() => isMounted && setLoading(false));
+            .finally(() => isMounted && setLoading(false))
 
         return () => {
-            isMounted = false;
-        };
-    }, [fetcher]);
+            isMounted = false
+        }
+    }, [fetcher])
 
-    return { data, loading, error };
+    return { data, loading, error }
 }
 
 // ============================================================================
