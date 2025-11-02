@@ -59,7 +59,7 @@ export default function PageHeader({
                         <div className="bg-secondary rounded-xl p-3">
                             <Icon
                                 className={
-                                    'h-6.5 w-6.5' +
+                                    'h-6 w-6' +
                                     (iconVariant === 'default'
                                         ? ' text-gray-600'
                                         : iconVariant === 'home'

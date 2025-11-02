@@ -2,7 +2,7 @@
 // Modules
 import { CheckCircle } from 'lucide-react'
 // Store
-import { useLoadingStore } from '@/store/loading'
+import { useCommonStore } from '@/store/common'
 
 /**
  * ページローディング表示コンポーネント
@@ -15,7 +15,7 @@ export default function LoadingOverlay() {
     // グローバル状態（GlobalState）
     // ============================================================================
     // StoreStates: コンポーネントの状態管理(Store)
-    const { isLoading } = useLoadingStore()
+    const { isLoading } = useCommonStore()
 
     // ============================================================================
     // テンプレート（Template）

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { CheckCircle } from 'lucide-react'
 // Layout/Components
-import PageHeader from '@/components/layout/page-header'
+import PageHeader from '@/components/layout/parts/page-header'
 // Types
 import { Task, TaskStatus } from '@/types'
 // Page/Components
@@ -18,7 +18,7 @@ import { mockTasks } from '@/mocks/task'
 // 一覧表示タイプ(table/card-list)
 const listType: 'table' | 'card-list' = 'table'
 
-export default function TasksPage() {
+export default function TaskListPage() {
     const [tasks, setTasks] = useState<Task[]>(mockTasks)
     const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false)
 

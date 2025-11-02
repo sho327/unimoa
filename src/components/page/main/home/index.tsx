@@ -6,7 +6,7 @@ import { CheckSquare, FileText, Calendar, TrendingUp, Plus, Home, CheckCircle } 
 import { UsersRound } from 'lucide-react'
 import Link from 'next/link'
 // Layout/Components
-import PageHeader from '@/components/layout/page-header'
+import PageHeader from '@/components/layout/parts/page-header'
 
 // モックデータ
 const recentActivity = [

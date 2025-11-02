@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { ThemeProvider } from 'next-themes'
 // Stores
-import { useThemeStore } from '@/store/theme'
+import { useCommonStore } from '@/store/common'
 
 /**
  * テーマプロバイダー/ラップコンポーネント
@@ -15,7 +15,7 @@ export function ThemeProviderWrapper({ children }: { children: React.ReactNode }
     // ============================================================================
     // グローバル状態（GlobalState）
     // ============================================================================
-    const theme = useThemeStore((s) => s.theme)
+    const { theme } = useCommonStore()
 
     // ============================================================================
     // Effect(Watch)処理（Effect(Watch)）

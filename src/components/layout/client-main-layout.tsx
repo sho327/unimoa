@@ -12,7 +12,7 @@ import {
     ChevronDown,
     Plus,
     // Crown,
-    // Check,
+    Check,
     Users,
     CheckCircle,
 } from 'lucide-react'
@@ -29,24 +29,24 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 // Layout/Components
-import { NotificationDropdown } from '@/components/layout/notification-dropdown'
-import { UserMenuDropdown } from '@/components/layout/user-menu-dropdown'
+import { NotificationDropdown } from '@/components/layout/parts/notification-dropdown'
+import { UserMenuDropdown } from '@/components/layout/parts/user-menu-dropdown'
 // Types
 import type { LayoutNavItem } from '@/types'
 import type { Team } from '@/components/layout/types'
 // Constants
-import { appInfo } from '@/constants'
+import { appInfo, pageRoutes } from '@/constants'
 // Store
-import { useUserStore } from '@/store/user'
-import { useGroupStore } from '@/store/group'
+import { useCommonStore } from '@/store/common'
+import { useProfileWithGroupsStore } from '@/store/profile-with-group'
 // Hooks
 import { useMount } from '@/hooks/use-mount'
-// Types
-import type { User } from '@/types'
+// Supabase
+import type { ProfileWithGroups } from '@/lib/supabase/user-data'
 
 type Props = {
     children: React.ReactNode
-    user: User | null
+    profileWithGroups: ProfileWithGroups | null
 }
 /**
  * メインレイアウトコンポーネント(クライアントコンポーネント)
@@ -54,43 +54,78 @@ type Props = {
  * @createdBy KatoShogo
  * @createdAt 2025/11/02
  */
-export default function ClientMainLayout({ children, user }: Props) {
-    // ============================================================================
-    // ローカル状態（LocalState）
-    // ============================================================================
-
+export default function ClientMainLayout({ children, profileWithGroups }: Props) {
     // ============================================================================
     // グローバル状態（GlobalState）
     // ============================================================================
-    const { setUser } = useUserStore()
-    const group = useGroupStore((s) => s.group)
+    const { selectGroup, setSelectGroup } = useCommonStore()
+    const { setProfileWithGroups } = useProfileWithGroupsStore()
 
     // ============================================================================
     // 変数（Constant）
     // ============================================================================
     const router = useRouter()
     const pathname = usePathname()
-    // チームIDがあるか判定
-    // const teamId = params.teamId as string | undefined
-    const teamId = '1'
-    const groups = [
-        { id: '1', name: '個人グループ', description: '個人用グループ', role: 'owner' },
-        { id: '2', name: 'Unimoa開発', description: 'Unimoa開発', role: 'admin' },
-        // { id: "3", name: "マーケティング", description: "マーケティング部門", role: "member" },
+    const navItems: LayoutNavItem[] = [
+        { href: pageRoutes.MAIN.HOME, label: 'ホーム', icon: require('lucide-react').Home },
+        {
+            href: pageRoutes.MAIN.TASK.LIST,
+            label: 'タスク',
+            icon: require('lucide-react').CheckCircle,
+        },
+        {
+            href: pageRoutes.MAIN.REPORT.LIST,
+            label: '日報',
+            icon: require('lucide-react').FileText,
+        },
+        { href: pageRoutes.MAIN.ME.SETTING, label: '設定', icon: require('lucide-react').Settings },
+        // { href: `/calendar`, label: "カレンダー", icon: require("lucide-react").Calendar },
+        // { href: `/files`, label: "ファイル", icon: require("lucide-react").FolderOpen },
+        // { href: `/member`, label: 'メンバー', icon: require('lucide-react').Users },
     ]
 
     // ============================================================================
     // 初期描画時の処理（Mounted）
     // ============================================================================
     useMount(() => {
-        console.log(group)
-        console.log('Tasrepoを起動しました 🚀')
+        /* 選択中グループの設定 */
+        // 1. 所属グループ(メンバーシップ)が存在しない場合は null に設定し、早期リターン
+        const memberships = profileWithGroups?.memberships
+        if (!memberships || memberships.length === 0) {
+            setSelectGroup(null)
+            return
+        }
+
+        // 2. 個人グループのリストを取得 (頻繁に使うため変数化)
+        const personalGroup = memberships.find((m) => m.groups.is_personal)?.groups || null
+
+        // 3. 選択中グループの存在チェックと設定
+
+        // 3A. selectGroup が未設定の場合: 個人グループを設定
+        if (!selectGroup) {
+            setSelectGroup(personalGroup)
+            return
+        }
+
+        // 3B. selectGroup が設定済みだが、所属グループ内に存在しない場合: 個人グループに切り替え
+        const isGroupExist = memberships.some((m) => m.groups.id === selectGroup.id)
+
+        if (!isGroupExist) {
+            setSelectGroup(personalGroup)
+            // 処理終了
+        }
+
+        // 3C. (selectGroupが設定済みで、所属グループ内に存在する場合): 何もしない (現状維持)
     })
 
+    // ============================================================================
+    // Effect(Watch)処理（Effect(Watch)）
+    // ============================================================================
     useEffect(() => {
-        if (user) setUser(user)
-        else setUser(null)
-    }, [user, setUser])
+        if (profileWithGroups) setProfileWithGroups(profileWithGroups)
+        else setProfileWithGroups(null)
+        console.log(profileWithGroups)
+    }, [profileWithGroups, setProfileWithGroups])
 
     // ============================================================================
     // アクション処理（Action）
@@ -98,25 +133,6 @@ export default function ClientMainLayout({ children, user }: Props) {
     const handleLogout = () => {
         router.push('/auth/login')
     }
-
-    // ============================================================================
-    // 算出プロパティ（Computed）
-    // ============================================================================
-    // チーム情報やナビはteamIdがある時だけセット
-    const team: Team | null = teamId
-        ? { id: teamId, name: 'チーム名が入ります', emoji: '✨' }
-        : null
-    const navItems: LayoutNavItem[] = teamId
-        ? [
-              { href: `/home`, label: 'ホーム', icon: require('lucide-react').Home },
-              { href: `/tasks`, label: 'タスク', icon: require('lucide-react').CheckCircle },
-              { href: `/reports`, label: '日報', icon: require('lucide-react').FileText },
-              // { href: `/calendar`, label: "カレンダー", icon: require("lucide-react").Calendar },
-              // { href: `/files`, label: "ファイル", icon: require("lucide-react").FolderOpen },
-              { href: `/members`, label: 'メンバー', icon: require('lucide-react').Users },
-              { href: `/settings`, label: '設定', icon: require('lucide-react').Settings },
-          ]
-        : []
 
     // ============================================================================
     // テンプレート（コンポーネント描画処理）
@@ -134,13 +150,6 @@ export default function ClientMainLayout({ children, user }: Props) {
                                 {appInfo.APP_NAME}
                             </span>
                         </Link>
-                        {/* チーム名はteamIdがある時だけ表示 */}
-                        {/* {team && (
-                            <>
-                                <div className="hidden md:block h-4 w-px bg-gray-300 mx-2" />
-                                <span className="hidden md:inline font-semibold text-foreground text-sm">{team.name}</span>
-                            </>
-                        )} */}
                         <div className="mx-2 hidden h-4 w-px bg-gray-300 md:block" />
                         {/* グループ選択 */}
                         <DropdownMenu>
@@ -152,8 +161,7 @@ export default function ClientMainLayout({ children, user }: Props) {
                                     <div className="flex items-center gap-2">
                                         <Users className="h-4 w-4 text-gray-600" />
                                         <span className="truncate text-gray-700">
-                                            {/* {currentOrg.name} */}
-                                            {groups[0].name}
+                                            {selectGroup?.name}
                                         </span>
                                     </div>
                                     <ChevronDown className="h-4 w-4 text-gray-400" />
@@ -167,9 +175,9 @@ export default function ClientMainLayout({ children, user }: Props) {
                                     グループを選択
                                 </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                {groups.map((group) => (
+                                {profileWithGroups?.memberships.map((membership, itemIndex) => (
                                     <DropdownMenuItem
-                                        key={group.id}
+                                        key={itemIndex}
                                         onClick={() => {
                                             // handleOrgSelect(org)
                                         }}
@@ -179,14 +187,16 @@ export default function ClientMainLayout({ children, user }: Props) {
                                             <Users className="h-4 w-4 text-gray-500" />
                                             <div>
                                                 <p className="font-medium text-gray-900">
-                                                    {group.name}
+                                                    {membership.groups.name}
                                                 </p>
                                                 <p className="text-xs text-gray-500">
-                                                    {group.role}
+                                                    {membership.groups.role}
                                                 </p>
                                             </div>
                                         </div>
-                                        {/* {currentOrg.id === org.id && <Check className="w-4 h-4 text-emerald-600" />} */}
+                                        {selectGroup && selectGroup.id === membership.groups.id && (
+                                            <Check className="h-4 w-4 text-emerald-600" />
+                                        )}
                                     </DropdownMenuItem>
                                 ))}
                                 <DropdownMenuSeparator />
@@ -220,7 +230,10 @@ export default function ClientMainLayout({ children, user }: Props) {
                             onMarkAsRead={() => {}}
                             onMarkAllAsRead={() => {}}
                         />
-                        <UserMenuDropdown userName={user?.name} onLogout={handleLogout} />
+                        <UserMenuDropdown
+                            userName={profileWithGroups?.name}
+                            onLogout={handleLogout}
+                        />
                     </div>
                 </div>
             </header>

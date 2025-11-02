@@ -1,18 +1,8 @@
 import { supabaseServer } from './server'
 
 /**
- * 現在の認証ユーザーを取得
- */
-export const getSessionUser = async () => {
-    const supabase = await supabaseServer()
-    const { data, error } = await supabase.auth.getUser()
-
-    if (error || !data.user) return null
-    return data.user
-}
-
-/**
  * 現在のユーザーが所属するグループ一覧を取得
+ * @returns User | null
  */
 export const getUserGroups = async (userId: string) => {
     const supabase = await supabaseServer()

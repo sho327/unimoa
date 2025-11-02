@@ -3,22 +3,22 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
     public: {
         Tables: {
-            users: {
+            profiles: {
                 Row: {
                     id: string
-                    name: string
-                    email: string
+                    name: string | null // name は NULL 許容ではないが、TS の利便性を考慮して一旦 string に
                     avatar_url: string | null
+                    theme: string | null
                     created_at: string | null
                 }
                 Insert: {
                     id?: string
                     name: string
-                    email: string
                     avatar_url?: string | null
+                    theme?: string | null
                     created_at?: string | null
                 }
-                Update: Partial<Database['public']['Tables']['users']['Insert']>
+                Update: Partial<Database['public']['Tables']['profiles']['Insert']>
                 Relationships: []
             }
 
@@ -28,6 +28,7 @@ export interface Database {
                     name: string
                     description: string | null
                     owner_id: string | null
+                    is_personal: boolean
                     created_at: string | null
                 }
                 Insert: {
@@ -35,6 +36,7 @@ export interface Database {
                     name: string
                     description?: string | null
                     owner_id?: string | null
+                    is_personal?: boolean
                     created_at?: string | null
                 }
                 Update: Partial<Database['public']['Tables']['groups']['Insert']>
@@ -42,7 +44,7 @@ export interface Database {
                     {
                         foreignKeyName: 'groups_owner_id_fkey'
                         columns: ['owner_id']
-                        referencedRelation: 'users'
+                        referencedRelation: 'profiles'
                         referencedColumns: ['id']
                     },
                 ]
@@ -72,7 +74,7 @@ export interface Database {
                     {
                         foreignKeyName: 'memberships_user_id_fkey'
                         columns: ['user_id']
-                        referencedRelation: 'users'
+                        referencedRelation: 'profiles'
                         referencedColumns: ['id']
                     },
                     {
@@ -84,12 +86,13 @@ export interface Database {
                     {
                         foreignKeyName: 'memberships_invited_by_fkey'
                         columns: ['invited_by']
-                        referencedRelation: 'users'
+                        referencedRelation: 'profiles'
                         referencedColumns: ['id']
                     },
                 ]
             }
 
+            // 🚀 tasks テーブル (duration_minutes は SQL で定義されたため除外)
             tasks: {
                 Row: {
                     id: string
@@ -128,12 +131,13 @@ export interface Database {
                     {
                         foreignKeyName: 'tasks_assignee_id_fkey'
                         columns: ['assignee_id']
-                        referencedRelation: 'users'
+                        referencedRelation: 'profiles'
                         referencedColumns: ['id']
                     },
                 ]
             }
 
+            // 🚀 work_logs テーブル
             work_logs: {
                 Row: {
                     id: string
@@ -141,7 +145,7 @@ export interface Database {
                     user_id: string
                     start_time: string
                     end_time: string | null
-                    duration_minutes: number | null
+                    duration_minutes: number | null // GENERATED ALWAYS AS
                     memo: string | null
                     created_at: string | null
                 }
@@ -165,12 +169,13 @@ export interface Database {
                     {
                         foreignKeyName: 'work_logs_user_id_fkey'
                         columns: ['user_id']
-                        referencedRelation: 'users'
+                        referencedRelation: 'profiles'
                         referencedColumns: ['id']
                     },
                 ]
             }
 
+            // 🚀 reports テーブル
             reports: {
                 Row: {
                     id: string
@@ -178,7 +183,7 @@ export interface Database {
                     user_id: string
                     date: string
                     content: string
-                    generated_from_task_ids: string[]
+                    generated_from_task_ids: string[] | null // SQLではUUID[] DEFAULT '{}'だが、TSではstring[]またはstring[] | null
                     created_at: string | null
                     updated_at: string | null
                 }
@@ -188,7 +193,7 @@ export interface Database {
                     user_id: string
                     date: string
                     content: string
-                    generated_from_task_ids?: string[]
+                    generated_from_task_ids?: string[] | null
                     created_at?: string | null
                     updated_at?: string | null
                 }
@@ -197,7 +202,7 @@ export interface Database {
                     {
                         foreignKeyName: 'reports_user_id_fkey'
                         columns: ['user_id']
-                        referencedRelation: 'users'
+                        referencedRelation: 'profiles'
                         referencedColumns: ['id']
                     },
                     {
@@ -209,6 +214,7 @@ export interface Database {
                 ]
             }
 
+            // 🚀 notifications テーブル
             notifications: {
                 Row: {
                     id: string
@@ -239,13 +245,13 @@ export interface Database {
                     {
                         foreignKeyName: 'notifications_user_id_fkey'
                         columns: ['user_id']
-                        referencedRelation: 'users'
+                        referencedRelation: 'profiles'
                         referencedColumns: ['id']
                     },
                     {
                         foreignKeyName: 'notifications_sender_id_fkey'
                         columns: ['sender_id']
-                        referencedRelation: 'users'
+                        referencedRelation: 'profiles'
                         referencedColumns: ['id']
                     },
                     {
@@ -258,23 +264,15 @@ export interface Database {
             }
         }
 
-        Views: {
-            user_groups_view: {
-                Row: {
-                    user_id: string
-                    group_id: string
-                    group_name: string
-                    group_description: string | null
-                    owner_id: string | null
-                    role: 'admin' | 'member' | 'guest'
-                    status: 'active' | 'invited' | 'removed'
-                    joined_at: string | null
-                    group_created_at: string | null
-                }
-            }
-        }
+        // Viewを削除
+        Views: Record<string, never>
 
         Functions: Record<string, never>
         Enums: Record<string, never>
     }
 }
+
+// 型,説明,使用例
+// Database['public']['Tables']['profiles']['Row'],profiles テーブルからデータを取得する際の型。,const profile: Row<'profiles'> = await supabase.from('profiles').select().single()
+// Database['public']['Tables']['profiles']['Insert'],profiles テーブルにデータを挿入する際の型。,await supabase.from('profiles').insert(data)
+// Database['public']['Tables']['profiles']['Update'],profiles テーブルのデータを更新する際の型。,await supabase.from('profiles').update(data)

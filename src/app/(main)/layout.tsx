@@ -1,7 +1,7 @@
 // Layout/Components
 import ClientMainLayout from '@/components/layout/client-main-layout'
 // Supabase
-import { getSessionUser, getUserGroups } from '@/lib/supabase/queries'
+import { fetchAuthenticatedUserData } from '@/lib/supabase/user-data'
 
 /**
  * メインレイアウト
@@ -10,10 +10,9 @@ import { getSessionUser, getUserGroups } from '@/lib/supabase/queries'
  * @createdAt 2025/11/02
  */
 export default async function MainLayout({ children }: { children: React.ReactNode }) {
-    const user = await getSessionUser()
-    const groups = user ? await getUserGroups(user.id) : []
+    const profileWithGroups = await fetchAuthenticatedUserData()
     // ============================================================================
     // テンプレート（Template）
     // ============================================================================
-    return <ClientMainLayout>{children}</ClientMainLayout>
+    return <ClientMainLayout profileWithGroups={profileWithGroups}>{children}</ClientMainLayout>
 }

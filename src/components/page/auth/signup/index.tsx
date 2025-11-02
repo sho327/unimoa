@@ -10,23 +10,22 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-// Constants
-import { appInfo } from '@/constants'
 // Store
 import { useCommonStore } from '@/store/common'
 // Supabase
 import { supabase } from '@/lib/supabase/client'
 
 /**
- * ログインページ
+ * 新規登録ページ
  * @args
  * @createdBy KatoShogo
- * @createdAt 2025/11/02
+ * @createdAt 2025/11/03
  */
-export default function LoginPage() {
+export default function SignupPage() {
     // ============================================================================
     // ローカル状態（LocalState）
     // ============================================================================
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState<string | null>(null)
@@ -45,7 +44,8 @@ export default function LoginPage() {
     // ============================================================================
     // スキーマ定義（Zod Validation）
     // ============================================================================
-    const loginSchema = z.object({
+    const signupSchema = z.object({
+        name: z.string().min(1, { message: '名前を入力してください。' }),
         email: z.string().email({ message: '有効なメールアドレスを入力してください。' }),
         password: z.string().min(6, { message: 'パスワードは6文字以上で入力してください。' }),
     })
@@ -53,32 +53,45 @@ export default function LoginPage() {
     // ============================================================================
     // アクション処理（Action）
     // ============================================================================
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleSignup = async (e: React.FormEvent) => {
         e.preventDefault()
         setError(null)
-        const result = loginSchema.safeParse({ email, password })
+
+        const result = signupSchema.safeParse({ name, email, password })
+
         if (!result.success) {
             setError(result.error.errors[0].message)
-            setIsLoading(false)
             return
         }
 
         setIsLoading(true)
-        // === Supabase Auth ログイン ===
-        const { data, error } = await supabase.auth.signInWithPassword({
+
+        // === Supabase Auth 新規登録 (signUp) ===
+        const { data, error: authError } = await supabase.auth.signUp({
             email,
             password,
+            options: {
+                data: {
+                    name: name, // DBトリガーが参照する名前をセット
+                },
+            },
         })
 
-        if (error) {
-            setError('メールアドレスまたはパスワードが正しくありません。')
+        if (authError) {
+            console.error('Sign-up error:', authError)
+            if (authError.message.includes('already registered')) {
+                setError('このメールアドレスは既に登録されています。')
+            } else {
+                setError('ユーザー登録中にエラーが発生しました。')
+            }
             setIsLoading(false)
             return
         }
 
-        // ログイン後
+        // 登録成功後の処理
         if (data.session) {
-            // Supabaseのセッション確立を軽く待機
+            // メール認証が無効な設定の場合、セッションが確立される
+            // セッション確立とDBトリガーの完了を軽く待機
             for (let i = 0; i < 5; i++) {
                 const { data: userCheck } = await supabase.auth.getUser()
                 if (userCheck.user) break
@@ -90,21 +103,43 @@ export default function LoginPage() {
                 router.push('/home')
             })
 
-            // トランジションとは独立してローディング解除
+            setIsLoading(false)
+        } else if (data.user && !data.session) {
+            // メール認証が必要な場合（デフォルト設定）
+            // 完了画面にリダイレクト
+            startTransition(() => {
+                // メール認証完了画面へのパスを指定
+                router.push('/auth/verify-email')
+            })
+            // ローディングはトランジションとは独立して解除
             setIsLoading(false)
         }
     }
 
     return (
         <>
-            {/* ログイン/カード */}
+            {/* 新規登録/カード */}
             <Card className="border-border rounded-xl">
                 <CardHeader className="space-y-1 text-center">
-                    <CardTitle className="text-2xl">おかえりなさい</CardTitle>
-                    <CardDescription>{appInfo.APP_NAME}アカウントにログイン</CardDescription>
+                    <CardTitle className="text-2xl">アカウント作成</CardTitle>
+                    <CardDescription>
+                        今日からチームでコラボレーションを始めましょう
+                    </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form onSubmit={handleLogin} className="space-y-4">
+                    <form onSubmit={handleSignup} className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="name">名前</Label>
+                            <Input
+                                id="name"
+                                type="text"
+                                placeholder="あなたの名前"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                                className="rounded-lg"
+                            />
+                        </div>
                         <div className="space-y-2">
                             <Label htmlFor="email">メールアドレス</Label>
                             <Input
@@ -122,7 +157,7 @@ export default function LoginPage() {
                             <Input
                                 id="password"
                                 type="password"
-                                placeholder="••••••••"
+                                placeholder="6文字以上"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
@@ -138,17 +173,17 @@ export default function LoginPage() {
                             size="lg"
                             disabled={isPending}
                         >
-                            {isPending ? 'ログイン中…' : 'ログイン'}
+                            {isPending ? '登録中…' : '新規登録'}
                         </Button>
                     </form>
 
                     <div className="text-muted-foreground mt-6 text-center text-sm">
-                        アカウントをお持ちでない方は{' '}
+                        既にアカウントをお持ちの方は{' '}
                         <Link
-                            href="/auth/signup"
+                            href="/auth/login"
                             className="text-primary font-medium hover:underline"
                         >
-                            新規登録
+                            ログイン
                         </Link>
                     </div>
                 </CardContent>

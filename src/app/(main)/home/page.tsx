@@ -1,5 +1,9 @@
+// Modules
+import { redirect } from 'next/navigation'
 // Page/Components
 import Home from '@/components/page/main/home'
+// Supabase
+import { getSessionUser } from '@/lib/supabase/getSessionUser'
 
 /**
  * ホームページ
@@ -7,7 +11,13 @@ import Home from '@/components/page/main/home'
  * @createdBy KatoShogo
  * @createdAt 2025/11/02
  */
-export default function HomePage() {
+export default async function HomePage() {
+    const user = await getSessionUser()
+
+    // 未認証の場合、リダイレクト
+    if (!user) {
+        redirect('/auth/login')
+    }
     // ============================================================================
     // テンプレート（Template）
     // ============================================================================

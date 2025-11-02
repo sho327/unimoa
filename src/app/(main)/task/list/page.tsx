@@ -1,15 +1,15 @@
 // Page/Components
-import Task from '@/components/page/main/task'
+import TaskList from '@/components/page/main/task/list'
 
 /**
- * タスクページ
+ * タスク一覧ページ
  * @args
  * @createdBy KatoShogo
  * @createdAt 2025/11/02
  */
-export default function TaskPage() {
+export default function TaskListPage() {
     // ============================================================================
     // テンプレート（Template）
     // ============================================================================
-    return <Task />
+    return <TaskList />
 }

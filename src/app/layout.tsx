@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google'
 // Privider/Components
 import { ThemeProviderWrapper } from '@/components/providers/theme-provider-wrapper'
 // Layout/Components
-import LoadingOverlay from '@/components/layout/loading-overlay'
+import LoadingOverlay from '@/components/layout/parts/loading-overlay'
 // Global/CSS
 import '@/styles/globals.css'
 // Constants
