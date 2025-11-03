@@ -63,15 +63,19 @@ export const HeaderUserMenuDropdown = ({
                 </Button>
             </DropdownMenuTrigger>
             {/* ドロップダウンメニュー */}
-            <DropdownMenuContent align="end" className="sm:w-56">
+            <DropdownMenuContent align="end" className="w-56 sm:w-40">
                 {/* ドロップダウンメニュー/ヘッダー */}
-                <DropdownMenuLabel>
-                    <div className="flex flex-col space-y-2 px-0.5 py-0.5">
-                        <p className="leading-none font-semibold">{displayUserName}</p>
-                    </div>
-                </DropdownMenuLabel>
+                {isMobile && (
+                    <>
+                        <DropdownMenuLabel>
+                            <div className="flex flex-col space-y-2 px-0.5 py-0.5">
+                                <p className="leading-none font-semibold">{displayUserName}</p>
+                            </div>
+                        </DropdownMenuLabel>
 
-                <DropdownMenuSeparator />
+                        <DropdownMenuSeparator />
+                    </>
+                )}
 
                 {/* ドロップダウンメニュー/ユーザメニューアイテム */}
                 <DropdownMenuItem

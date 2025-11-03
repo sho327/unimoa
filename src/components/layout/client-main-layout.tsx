@@ -1,10 +1,10 @@
 'use client'
 // Modules
 import type React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
-import { CheckCircle } from 'lucide-react'
+import { CheckCircle, Menu, X } from 'lucide-react'
 // UI/Components
 import { Button } from '@/components/ui/button'
 // Layout/Components
@@ -28,6 +28,8 @@ import { useMount } from '@/hooks/use-mount'
 import { useIsMobile } from '@/hooks/use-mobile'
 // Supabase
 import type { ProfileWithGroups } from '@/lib/supabase/userData'
+// Lib/Utils
+import { cn } from '@/lib/utils'
 
 type Props = {
     children: React.ReactNode
@@ -40,6 +42,11 @@ type Props = {
  * @createdAt 2025/11/02
  */
 export default function ClientMainLayout({ children, profileWithGroups }: Props) {
+    // ============================================================================
+    // ローカル状態（LocalState）
+    // ============================================================================
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
     // ============================================================================
     // グローバル状態（GlobalState）
     // ============================================================================
@@ -179,7 +186,7 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
                     </div>
                 </div>
             </header>
-            {/* ヘッダー下ナビ */}
+            {/* ヘッダー下ナビ(スマホ以上の場合) */}
             <nav className="border-border bg-card/80 sticky top-[58px] z-40 hidden border-b backdrop-blur-sm md:block">
                 <div className="container mx-auto px-4 lg:px-6">
                     <div className="flex items-center gap-1 overflow-x-auto py-2">
@@ -202,7 +209,50 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
                     </div>
                 </div>
             </nav>
-            <main className="container mx-auto px-6 py-8">{children}</main>
+            {/* ヘッダー下ナビ(スマホの場合) */}
+            <div className="bg-card border-border border-b md:hidden">
+                <div className="flex items-center justify-between px-4.25 py-3">
+                    <span className="text-muted-foreground text-sm font-medium">
+                        {navItems.find((item) => item.href === pathname)?.label || 'メニュー'}
+                    </span>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        className="h-8 w-8"
+                    >
+                        {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                    </Button>
+                </div>
+
+                {mobileMenuOpen && (
+                    <div className="border-border border-t bg-white">
+                        <nav className="space-y-1 p-2">
+                            {navItems.map((item) => {
+                                const Icon = item.icon
+                                const isActive = pathname === item.href
+                                return (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className={cn(
+                                            'flex items-center gap-3 rounded-sm px-4 py-3 text-sm font-medium transition-colors',
+                                            isActive
+                                                ? 'bg-primary text-primary-foreground'
+                                                : 'text-foreground hover:bg-secondary'
+                                        )}
+                                    >
+                                        <Icon className="h-5 w-5" />
+                                        {item.label}
+                                    </Link>
+                                )
+                            })}
+                        </nav>
+                    </div>
+                )}
+            </div>
+            <main className="container mx-auto px-3 py-5.5 sm:px-6 sm:py-8">{children}</main>
         </div>
     )
 }

@@ -54,7 +54,7 @@ export default function PageHeader({
             )}
             {/* ページアイコン/タイトル/詳細 */}
             <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2.5 sm:gap-3">
                     {Icon && (
                         <div className="bg-secondary rounded-xl p-3">
                             <Icon
@@ -76,8 +76,10 @@ export default function PageHeader({
                         </div>
                     )}
                     <div>
-                        <h1 className="text-foreground text-2xl font-semibold">{pageTitle}</h1>
-                        <p className="text-muted-foreground mt-1">{pageDescription}</p>
+                        <h1 className="text-foreground text-xl font-semibold sm:text-2xl">
+                            {pageTitle}
+                        </h1>
+                        <p className="text-muted-foreground mt-1 text-sm">{pageDescription}</p>
                     </div>
                 </div>
                 {/* 作成ボタンがある場合等は、各自childrenにてページ側で設定 */}
