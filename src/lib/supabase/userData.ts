@@ -21,6 +21,9 @@ export type ProfileWithGroups = ProfileRow & {
 // ----------------------------------------------------
 /**
  * 現在ログインしているユーザーセッション情報を取得
+ * @args
+ * @createdBy KatoShogo
+ * @createdAt 2025/11/03
  */
 export const getSessionUser = async (): Promise<User | null> => {
     // ... (以前のロジック: userを取得)
@@ -37,7 +40,9 @@ export const getSessionUser = async (): Promise<User | null> => {
  * profileWithGroupsが"null"の場合	profileWithGroups?.memberships	undefined
  * profileWithGroupsが"オブジェクト"の場合	profileWithGroups.memberships	MembershipWithGroup[](空または中身あり)
  * ----------------------------------------------------
- * @returns ProfileWithGroups | null
+ * @args
+ * @createdBy KatoShogo
+ * @createdAt 2025/11/03
  */
 export async function fetchAuthenticatedUserData(): Promise<ProfileWithGroups | null> {
     const user = await getSessionUser()
@@ -86,10 +91,10 @@ export async function fetchAuthenticatedUserData(): Promise<ProfileWithGroups | 
 // if (profileData) {
 //     // 例: 自分が 'admin' の役割を持っているグループだけを抽出したい場合
 //     const adminMemberships = profileData.memberships.filter(m => m.role === 'admin');
-    
+
 //     // 例: 自分が所属するグループ全体のリスト（ロールは問わない）
 //     const allGroups = profileData.memberships.map(m => m.groups);
-    
+
 //     // 例: 個人グループを特定する
 //     const personalGroup = profileData.memberships.find(m => m.groups.is_personal)?.groups;
 // }

@@ -22,7 +22,7 @@ interface HeaderGroupSelectDropdownProps {
     selectGroup: GroupRow | null
     membershipWithGroup: MembershipWithGroup[] | null
     onSelectGroup: (selectGroup: GroupRow) => void
-    onCreateGroup: () => void
+    onClickCreateGroup: () => void
 }
 
 /**
@@ -35,7 +35,7 @@ export const HeaderGroupSelectDropdown = ({
     selectGroup,
     membershipWithGroup,
     onSelectGroup,
-    onCreateGroup,
+    onClickCreateGroup,
 }: HeaderGroupSelectDropdownProps) => {
     // ============================================================================
     // 変数（Constant）
@@ -97,7 +97,7 @@ export const HeaderGroupSelectDropdown = ({
                     <Link
                         href="#"
                         className="flex items-center gap-2 rounded-lg"
-                        onClick={onCreateGroup}
+                        onClick={onClickCreateGroup}
                     >
                         <Plus className="h-4 w-4 text-emerald-600" />
                         <span>新しいグループを作成</span>

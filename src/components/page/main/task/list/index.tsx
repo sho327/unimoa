@@ -7,8 +7,8 @@ import PageHeader from '@/components/layout/parts/page-header'
 // Types
 import { Task, TaskStatus } from '@/types'
 // Page/Components
-import CreateModal from './create-modal'
-import TaskTable from './task-table'
+import CreateModal from '@/components/page/main/task/list/parts/create-modal'
+import TaskTable from '@/components/page/main/task/list/parts/task-table'
 // ================================================
 // モックデータ
 // ================================================
@@ -28,6 +28,9 @@ export default function TaskListPage() {
     const [tasks, setTasks] = useState<Task[]>(mockTasks)
     const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false)
 
+    // ============================================================================
+    // アクション処理（Action）
+    // ============================================================================
     const handleCreateTask = (taskData: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => {
         const newTask: Task = {
             ...taskData,
@@ -37,7 +40,6 @@ export default function TaskListPage() {
         }
         setTasks([...tasks, newTask])
     }
-
     const toggleTaskStatus = (taskId: string) => {
         setTasks(
             tasks.map((task) => {

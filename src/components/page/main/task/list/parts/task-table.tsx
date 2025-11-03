@@ -2,7 +2,7 @@
 
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Task } from '@/types'
-import TaskTableItems from './task-table-items'
+import TaskTableItems from '@/components/page/main/task/list/parts/task-table-items'
 
 interface TaskTableProps {
     tasks: Task[]

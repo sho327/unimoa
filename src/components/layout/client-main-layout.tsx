@@ -121,7 +121,7 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
     const handleOnSelectGroup = (selectGroup: GroupRow) => {
         console.log(`selectGroup: ${selectGroup}`)
     }
-    const handleOnCreateGroup = () => {
+    const handleOnClickCreateGroup = () => {
         console.log('グループ新規作成ボタンが押下されました')
     }
     /* お知らせ/ドロップダウンイベント */
@@ -165,7 +165,7 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
                                 profileWithGroups ? profileWithGroups.memberships : null
                             }
                             onSelectGroup={handleOnSelectGroup}
-                            onCreateGroup={handleOnCreateGroup}
+                            onClickCreateGroup={handleOnClickCreateGroup}
                         />
                     </div>
                     {/* 右側: お知らせ、ユーザーメニュー */}
