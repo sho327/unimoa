@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { CheckCircle } from 'lucide-react'
 // Constants
-import { appInfo } from '@/constants'
+import { appInfo } from '@/constants/appInfo'
 
 export default function ClientMainLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter()

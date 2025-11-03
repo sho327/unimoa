@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 // Constants
-import { appInfo } from '@/constants'
+import { appInfo } from '@/constants/appInfo'
 // Store
 import { useCommonStore } from '@/store/common'
 // Supabase

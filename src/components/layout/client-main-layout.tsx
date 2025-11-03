@@ -37,14 +37,15 @@ import type { LayoutNavItem } from '@/types'
 import type { Team } from '@/components/layout/types'
 import type { GroupRow } from '@/types/group'
 // Constants
-import { appInfo, pageRoutes } from '@/constants'
+import { appInfo } from '@/constants/appInfo'
+import { pageRoutes } from '@/constants/pageRoutes'
 // Store
 import { useCommonStore } from '@/store/common'
-import { useProfileWithGroupsStore } from '@/store/profile-with-group'
+import { useProfileWithGroupsStore } from '@/store/profileWithGroup'
 // Hooks
 import { useMount } from '@/hooks/use-mount'
 // Supabase
-import type { ProfileWithGroups } from '@/lib/supabase/user-data'
+import type { ProfileWithGroups } from '@/lib/supabase/userData'
 
 type Props = {
     children: React.ReactNode
@@ -146,6 +147,7 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
         <div className="bg-background min-h-screen">
             <header className="bg-card sticky top-0 z-50 h-[58px] border-b shadow-xs">
                 <div className="container mx-auto flex h-full items-center justify-between px-6">
+                    {/* 左側: ロゴ、グループ選択 */}
                     <div className="flex items-center gap-3">
                         <Link href="/teams" className="flex items-center gap-2.5">
                             <div className="bg-primary flex h-9 w-9 items-center justify-center rounded-xl shadow-sm">
@@ -156,7 +158,7 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
                             </span>
                         </Link>
                         <div className="mx-2 hidden h-4 w-px bg-gray-300 md:block" />
-                        {/* グループ選択//ドロップダウン */}
+                        {/* グループ選択/ドロップダウン */}
                         <HeaderGroupSelectDropdown
                             selectGroup={selectGroup}
                             membershipWithGroup={
@@ -166,7 +168,7 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
                             onCreateGroup={handleOnCreateGroup_HeaderGroupSelectDropdown}
                         />
                     </div>
-                    {/* 右側: ユーザーメニュー、通知など今後共通化予定 */}
+                    {/* 右側: 通知、ユーザーメニュー */}
                     <div className="flex items-center gap-2">
                         <NotificationDropdown
                             notifications={[]}

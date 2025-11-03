@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 // Supabase
-import type { ProfileWithGroups } from '@/lib/supabase/user-data'
+import type { ProfileWithGroups } from '@/lib/supabase/userData'
 
 interface ProfileWithGroupsState {
     profileWithGroups: ProfileWithGroups | null

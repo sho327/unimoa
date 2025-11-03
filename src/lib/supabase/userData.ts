@@ -78,3 +78,18 @@ export async function fetchAuthenticatedUserData(): Promise<ProfileWithGroups | 
     // (ランタイムのデータ構造は正しいため、パーサーエラーを回避するために使用)
     return profileData as unknown as ProfileWithGroups
 }
+
+// ============================================================================
+// ロール別フィルタリングの利用方法
+// ============================================================================
+// const profileData = await fetchAuthenticatedUserData();
+// if (profileData) {
+//     // 例: 自分が 'admin' の役割を持っているグループだけを抽出したい場合
+//     const adminMemberships = profileData.memberships.filter(m => m.role === 'admin');
+    
+//     // 例: 自分が所属するグループ全体のリスト（ロールは問わない）
+//     const allGroups = profileData.memberships.map(m => m.groups);
+    
+//     // 例: 個人グループを特定する
+//     const personalGroup = profileData.memberships.find(m => m.groups.is_personal)?.groups;
+// }

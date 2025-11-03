@@ -9,7 +9,7 @@ import LoadingOverlay from '@/components/layout/parts/loading-overlay'
 // Global/CSS
 import '@/styles/globals.css'
 // Constants
-import { appInfo } from '@/constants'
+import { appInfo } from '@/constants/appInfo'
 
 const inter = Inter({ subsets: ['latin'] })
 

@@ -1,7 +1,7 @@
 // Layout/Components
 import ClientMainLayout from '@/components/layout/client-main-layout'
 // Supabase
-import { fetchAuthenticatedUserData } from '@/lib/supabase/user-data'
+import { fetchAuthenticatedUserData } from '@/lib/supabase/userData'
 
 /**
  * メインレイアウト

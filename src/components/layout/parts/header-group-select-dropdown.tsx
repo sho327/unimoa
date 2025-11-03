@@ -14,7 +14,7 @@ import {
 // Types
 import type { GroupRow } from '@/types/group'
 // Supabase
-import type { MembershipWithGroup } from '@/lib/supabase/user-data'
+import type { MembershipWithGroup } from '@/lib/supabase/userData'
 
 interface HeaderGroupSelectDropdownProps {
     selectGroup: GroupRow | null
@@ -44,7 +44,7 @@ export const HeaderGroupSelectDropdown = ({
                 <Button
                     variant="outline"
                     className="justify-between rounded-lg border-gray-200 bg-white hover:bg-gray-50"
-                    disabled
+                    // disabled
                 >
                     <div className="flex items-center gap-2">
                         <Users className="h-4 w-4 text-gray-600" />
@@ -70,7 +70,7 @@ export const HeaderGroupSelectDropdown = ({
                                         {membership.groups.name}
                                     </p>
                                     <p className="text-xs text-gray-500">
-                                        {membership.groups.role}
+                                        {membership.role}
                                     </p>
                                 </div>
                             </div>
