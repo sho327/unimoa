@@ -15,6 +15,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
  * @createdAt 2025/11/03
  */
 export default function SignupConfirmPage() {
+    // ============================================================================
+    // テンプレート（コンポーネント描画処理）
+    // ============================================================================
     return (
         <>
             {/* 認証完了/カード */}

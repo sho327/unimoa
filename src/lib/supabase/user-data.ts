@@ -1,41 +1,42 @@
-import { supabaseServer } from './server' // サーバークライアントのインスタンスを取得する関数
+// Modules
+import { supabaseServer } from './server'
 import type { User } from '@supabase/supabase-js'
-import { Database } from '@/types/Database' // データベース型定義
+// Types
+import { GroupRow } from '@/types/group'
+import { MembershipRow } from '@/types/membership'
+import { ProfileRow } from '@/types/profile'
 
-// ============================================================================
-// 1. 型定義
-// ============================================================================
-
-// 所属グループをネストしたプロフィール情報の型定義
-// Row の型をそのまま使用し、リレーションシップで結合されたグループ情報を追加
-export type ProfileWithGroups = Database['public']['Tables']['profiles']['Row'] & {
-    memberships: {
-        groups: Database['public']['Tables']['groups']['Row']
-    }[]
+// Memberships の Row に、関連する Groups の情報（groups）をネストして追加
+export type MembershipWithGroup = MembershipRow & {
+    groups: GroupRow
+}
+// プロフィールの Row に、関連する MembershipWithGroup のリスト（memberships）をネストして追加
+export type ProfileWithGroups = ProfileRow & {
+    // profileWithGroups が null でない場合、TypeScriptは memberships が null ではなく配列（[] または [...リスト]）であると判定
+    memberships: MembershipWithGroup[]
 }
 
-// ============================================================================
-// 2. 認証済みユーザー取得
-// ============================================================================
-
+// ----------------------------------------------------
+// 認証済みユーザーのプロフィールとグループを取得する関数
+// ----------------------------------------------------
 /**
  * 現在ログインしているユーザーセッション情報を取得
- * (既存の getSessionUser.ts の内容を統合)
- * @returns User | null
  */
 export const getSessionUser = async (): Promise<User | null> => {
+    // ... (以前のロジック: userを取得)
     const supabase = await supabaseServer()
     const { data, error } = await supabase.auth.getUser()
     if (error || !data.user) return null
     return data.user
 }
 
-// ============================================================================
-// 3. プロフィールとグループ一覧の取得 (今回追加するメイン関数)
-// ============================================================================
-
 /**
  * 認証済みユーザーのプロフィールと所属グループ一覧をフェッチする
+ * ----------------------------------------------------
+ * 項目	ロジック	結果
+ * profileWithGroupsが"null"の場合	profileWithGroups?.memberships	undefined
+ * profileWithGroupsが"オブジェクト"の場合	profileWithGroups.memberships	MembershipWithGroup[](空または中身あり)
+ * ----------------------------------------------------
  * @returns ProfileWithGroups | null
  */
 export async function fetchAuthenticatedUserData(): Promise<ProfileWithGroups | null> {
@@ -46,26 +47,34 @@ export async function fetchAuthenticatedUserData(): Promise<ProfileWithGroups | 
 
     const supabase = await supabaseServer()
 
-    // SupabaseのPostgREST機能を使用して、JOIN相当の複雑なデータを一度に取得
     const { data: profileData, error } = await supabase
         .from('profiles')
         .select(
             `
-            *,
-            memberships!memberships_user_id_fkey(
-                groups(*)
-            )
-        `
+				id,
+				name,
+				avatar_url,
+				theme,
+				created_at,
+				memberships!memberships_user_id_fkey( 
+					id,
+					user_id,
+					group_id,
+					role,
+					status,
+					groups(*)
+				)
+			`
         )
         .eq('id', user.id)
         .single()
 
     if (error) {
         console.error('Error fetching user data in server utils:', error.message)
-        // データ取得エラー
         return null
     }
 
-    // 取得データを型キャストして返す
-    return profileData as ProfileWithGroups
+    // `as unknown as ProfileWithGroups` で型キャストを強制
+    // (ランタイムのデータ構造は正しいため、パーサーエラーを回避するために使用)
+    return profileData as unknown as ProfileWithGroups
 }

@@ -29,7 +29,16 @@ interface CreateModalProps {
     onSubmit: (task: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>) => void
 }
 
+/**
+ * タスク新規作成モーダルコンポーネント
+ * @args
+ * @createdBy KatoShogo
+ * @createdAt 2025/11/03
+ */
 export default function CreateModal({ isOpen, onOpenChange, onSubmit }: CreateModalProps) {
+    // ============================================================================
+    // ローカル状態（LocalState）
+    // ============================================================================
     const [formData, setFormData] = React.useState({
         title: '',
         description: '',
@@ -57,6 +66,9 @@ export default function CreateModal({ isOpen, onOpenChange, onSubmit }: CreateMo
         onOpenChange(false)
     }
 
+    // ============================================================================
+    // テンプレート（Template）
+    // ============================================================================
     return (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
             <DialogTrigger asChild>

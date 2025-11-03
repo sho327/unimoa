@@ -47,7 +47,16 @@ const quickStats = [
     { label: '進捗率', value: '68%', icon: TrendingUp, color: 'text-chart-4' },
 ]
 
+/**
+ * ホームページ
+ * @args
+ * @createdBy KatoShogo
+ * @createdAt 2025/11/03
+ */
 export default function HomePage() {
+    // ============================================================================
+    // テンプレート（コンポーネント描画処理）
+    // ============================================================================
     return (
         <div className="mx-auto max-w-7xl space-y-6">
             {/* ページヘッダー */}

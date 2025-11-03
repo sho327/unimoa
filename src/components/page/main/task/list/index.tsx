@@ -15,10 +15,16 @@ import TaskTable from './task-table'
 import { mockTasks } from '@/mocks/task'
 // ================================================
 
-// 一覧表示タイプ(table/card-list)
-const listType: 'table' | 'card-list' = 'table'
-
+/**
+ * タスク一覧ページ
+ * @args
+ * @createdBy KatoShogo
+ * @createdAt 2025/11/03
+ */
 export default function TaskListPage() {
+    // ============================================================================
+    // ローカル状態（LocalState）
+    // ============================================================================
     const [tasks, setTasks] = useState<Task[]>(mockTasks)
     const [isCreateModalOpen, setIsCreateModalOpen] = useState<boolean>(false)
 

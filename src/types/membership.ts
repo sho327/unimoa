@@ -1,13 +1,6 @@
-export type MembershipRole = 'admin' | 'member' | 'guest'
+import { Database } from './Database'
 
-export type MembershipStatus = 'active' | 'invited' | 'removed'
-
-export interface Membership {
-    id: string
-    userId: string
-    groupId: string
-    role: MembershipRole
-    status: MembershipStatus
-    joinedAt: string
-    invitedBy?: string
-}
+/**
+ * Memberships テーブルの単一行のデータ型
+ */
+export type MembershipRow = Database['public']['Tables']['memberships']['Row']

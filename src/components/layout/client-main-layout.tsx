@@ -8,10 +8,9 @@ import {
     // Sparkles,
     // User,
     // LogOut,
-    // Building2,
     ChevronDown,
     Plus,
-    // Crown,
+    Crown,
     Check,
     Users,
     CheckCircle,
@@ -31,9 +30,12 @@ import { Badge } from '@/components/ui/badge'
 // Layout/Components
 import { NotificationDropdown } from '@/components/layout/parts/notification-dropdown'
 import { UserMenuDropdown } from '@/components/layout/parts/user-menu-dropdown'
+// Page/Components
+import { HeaderGroupSelectDropdown } from '@/components/layout/parts/header-group-select-dropdown'
 // Types
 import type { LayoutNavItem } from '@/types'
 import type { Team } from '@/components/layout/types'
+import type { GroupRow } from '@/types/group'
 // Constants
 import { appInfo, pageRoutes } from '@/constants'
 // Store
@@ -95,26 +97,20 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
             setSelectGroup(null)
             return
         }
-
         // 2. 個人グループのリストを取得 (頻繁に使うため変数化)
         const personalGroup = memberships.find((m) => m.groups.is_personal)?.groups || null
-
         // 3. 選択中グループの存在チェックと設定
-
         // 3A. selectGroup が未設定の場合: 個人グループを設定
         if (!selectGroup) {
             setSelectGroup(personalGroup)
             return
         }
-
         // 3B. selectGroup が設定済みだが、所属グループ内に存在しない場合: 個人グループに切り替え
         const isGroupExist = memberships.some((m) => m.groups.id === selectGroup.id)
-
         if (!isGroupExist) {
             setSelectGroup(personalGroup)
             // 処理終了
         }
-
         // 3C. (selectGroupが設定済みで、所属グループ内に存在する場合): 何もしない (現状維持)
     })
 
@@ -130,9 +126,18 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
     // ============================================================================
     // アクション処理（Action）
     // ============================================================================
+    /* グループ選択/ドロップダウンイベント */
+    const handleOnSelectGroup_HeaderGroupSelectDropdown = (selectGroup: GroupRow) => {
+        console.log(`selectGroup: ${selectGroup}`)
+    }
+    const handleOnCreateGroup_HeaderGroupSelectDropdown = () => {
+        console.log('グループ新規作成ボタンが押下されました')
+    }
+    /* ナビゲーション/ドロップダウンイベント */
     const handleLogout = () => {
         router.push('/auth/login')
     }
+    /* ユーザメニュー/ドロップダウンイベント */
 
     // ============================================================================
     // テンプレート（コンポーネント描画処理）
@@ -151,76 +156,15 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
                             </span>
                         </Link>
                         <div className="mx-2 hidden h-4 w-px bg-gray-300 md:block" />
-                        {/* グループ選択 */}
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    className="justify-between rounded-lg border-gray-200 bg-white hover:bg-gray-50"
-                                >
-                                    <div className="flex items-center gap-2">
-                                        <Users className="h-4 w-4 text-gray-600" />
-                                        <span className="truncate text-gray-700">
-                                            {selectGroup?.name}
-                                        </span>
-                                    </div>
-                                    <ChevronDown className="h-4 w-4 text-gray-400" />
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent
-                                className="w-56 rounded-xl border-gray-200"
-                                align="start"
-                            >
-                                <DropdownMenuLabel className="text-gray-700">
-                                    グループを選択
-                                </DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                {profileWithGroups?.memberships.map((membership, itemIndex) => (
-                                    <DropdownMenuItem
-                                        key={itemIndex}
-                                        onClick={() => {
-                                            // handleOrgSelect(org)
-                                        }}
-                                        className="flex cursor-pointer items-center justify-between rounded-lg"
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            <Users className="h-4 w-4 text-gray-500" />
-                                            <div>
-                                                <p className="font-medium text-gray-900">
-                                                    {membership.groups.name}
-                                                </p>
-                                                <p className="text-xs text-gray-500">
-                                                    {membership.groups.role}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        {selectGroup && selectGroup.id === membership.groups.id && (
-                                            <Check className="h-4 w-4 text-emerald-600" />
-                                        )}
-                                    </DropdownMenuItem>
-                                ))}
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem
-                                    asChild
-                                    // disabled={!canCreateMoreOrgs}
-                                >
-                                    <Link
-                                        href="/organizations?action=create"
-                                        className="flex items-center gap-2 rounded-lg"
-                                        onClick={() => {
-                                            // スマホの場合のみサイドバーを閉じる
-                                            // if (isMobile) {
-                                            //   setOpenMobile(false)
-                                            // }
-                                        }}
-                                    >
-                                        <Plus className="h-4 w-4 text-emerald-600" />
-                                        <span>新しいグループを作成</span>
-                                        {/* {!user.isPremium && organizations.length >= 1 && <Crown className="w-3 h-3 text-amber-500 ml-auto" />} */}
-                                    </Link>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        {/* グループ選択//ドロップダウン */}
+                        <HeaderGroupSelectDropdown
+                            selectGroup={selectGroup}
+                            membershipWithGroup={
+                                profileWithGroups ? profileWithGroups.memberships : null
+                            }
+                            onSelectGroup={handleOnSelectGroup_HeaderGroupSelectDropdown}
+                            onCreateGroup={handleOnCreateGroup_HeaderGroupSelectDropdown}
+                        />
                     </div>
                     {/* 右側: ユーザーメニュー、通知など今後共通化予定 */}
                     <div className="flex items-center gap-2">
@@ -237,8 +181,7 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
                     </div>
                 </div>
             </header>
-            {/* ヘッダー下ナビもteamIdある時のみ表示 */}
-            {/* {teamId && ( */}
+            {/* ヘッダー下ナビ */}
             <nav className="border-border bg-card/80 sticky top-[58px] z-40 hidden border-b backdrop-blur-sm md:block">
                 <div className="container mx-auto px-4 lg:px-6">
                     <div className="flex items-center gap-1 overflow-x-auto py-2">
@@ -261,7 +204,6 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
                     </div>
                 </div>
             </nav>
-            {/* )} */}
             <main className="container mx-auto px-6 py-8">{children}</main>
         </div>
     )

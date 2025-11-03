@@ -9,7 +9,16 @@ interface TaskTableProps {
     onToggleStatus?: (taskId: string) => void
 }
 
+/**
+ * タスク一覧テーブルコンポーネント
+ * @args
+ * @createdBy KatoShogo
+ * @createdAt 2025/11/03
+ */
 export default function TaskTable({ tasks, onToggleStatus }: TaskTableProps) {
+    // ============================================================================
+    // テンプレート（Template）
+    // ============================================================================
     return (
         <div className="rounded-lg border bg-white shadow-sm">
             <Table>

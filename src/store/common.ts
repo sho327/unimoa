@@ -1,12 +1,12 @@
 // Modules
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { Database } from '@/types/Database' // データベース型定義
+import { GroupRow } from '@/types/group'
 
 interface CommonState {
     /* 選択中グループ */
-    selectGroup: Database['public']['Tables']['groups']['Row'] | null
-    setSelectGroup: (selectGroup: Database['public']['Tables']['groups']['Row'] | null) => void
+    selectGroup: GroupRow | null
+    setSelectGroup: (selectGroup: GroupRow | null) => void
     clearSelectGroup: () => void
     /* 選択中テーマ */
     theme: 'light' | 'dark'

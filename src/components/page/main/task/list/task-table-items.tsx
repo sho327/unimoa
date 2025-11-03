@@ -27,7 +27,16 @@ const statusColors: Record<TaskStatus, string> = {
     completed: 'bg-green-100 text-green-700 border-green-200',
 }
 
+/**
+ * タスク一覧テーブルアイテムコンポーネント
+ * @args
+ * @createdBy KatoShogo
+ * @createdAt 2025/11/03
+ */
 export default function TaskTableItems({ tasks, onToggleStatus }: TaskTableItemsProps) {
+    // ============================================================================
+    // テンプレート（Template）
+    // ============================================================================
     if (tasks.length === 0) {
         return (
             <TableRow className="hover:bg-white">
