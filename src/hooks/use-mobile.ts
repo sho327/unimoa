@@ -17,3 +17,9 @@ export function useIsMobile() {
 
     return !!isMobile
 }
+
+// ============================================================================
+// 使用例
+// ============================================================================
+// import { useIsMobile } from '@/hooks/useIsMobile';
+// const isMobile = useIsMobile();

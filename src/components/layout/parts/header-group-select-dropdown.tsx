@@ -13,6 +13,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 // Types
 import type { GroupRow } from '@/types/group'
+// Hooks
+import { useIsMobile } from '@/hooks/use-mobile'
 // Supabase
 import type { MembershipWithGroup } from '@/lib/supabase/userData'
 
@@ -36,26 +38,36 @@ export const HeaderGroupSelectDropdown = ({
     onCreateGroup,
 }: HeaderGroupSelectDropdownProps) => {
     // ============================================================================
+    // 変数（Constant）
+    // ============================================================================
+    const isMobile = useIsMobile()
+
+    // ============================================================================
     // テンプレート（Template）
     // ============================================================================
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            {/* ドロップダウンメニュー */}
+            <DropdownMenuTrigger asChild className={isMobile ? 'w-32' : 'w-48'}>
                 <Button
                     variant="outline"
-                    className="justify-between rounded-lg border-gray-200 bg-white hover:bg-gray-50"
-                    // disabled
+                    className="w-hull hover:bg-primary/10 justify-between rounded-lg border-gray-200 bg-white"
                 >
-                    <div className="flex items-center gap-2">
+                    <div className="flex w-[80%] items-center gap-2">
                         <Users className="h-4 w-4 text-gray-600" />
                         <span className="truncate text-gray-700">{selectGroup?.name}</span>
                     </div>
                     <ChevronDown className="h-4 w-4 text-gray-400" />
                 </Button>
             </DropdownMenuTrigger>
+            {/* ドロップダウンメニュー */}
             <DropdownMenuContent className="w-56 rounded-xl border-gray-200" align="start">
+                {/* ドロップダウンメニュー/ヘッダー */}
                 <DropdownMenuLabel className="text-gray-700">グループを選択</DropdownMenuLabel>
+
                 <DropdownMenuSeparator />
+
+                {/* ドロップダウンメニュー/グループアイテム */}
                 {membershipWithGroup &&
                     membershipWithGroup.map((membership, itemIndex) => (
                         <DropdownMenuItem
@@ -69,9 +81,7 @@ export const HeaderGroupSelectDropdown = ({
                                     <p className="font-medium text-gray-900">
                                         {membership.groups.name}
                                     </p>
-                                    <p className="text-xs text-gray-500">
-                                        {membership.role}
-                                    </p>
+                                    <p className="text-xs text-gray-500">{membership.role}</p>
                                 </div>
                             </div>
                             {selectGroup && selectGroup.id === membership.groups.id && (
@@ -79,8 +89,11 @@ export const HeaderGroupSelectDropdown = ({
                             )}
                         </DropdownMenuItem>
                     ))}
+
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
+
+                {/* ドロップダウンメニュー/新しいグループを作成 */}
+                <DropdownMenuItem asChild className="cursor-pointer">
                     <Link
                         href="#"
                         className="flex items-center gap-2 rounded-lg"

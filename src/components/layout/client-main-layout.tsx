@@ -3,38 +3,19 @@
 import type React from 'react'
 import { useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter, useParams, usePathname } from 'next/navigation'
-import {
-    // Sparkles,
-    // User,
-    // LogOut,
-    ChevronDown,
-    Plus,
-    Crown,
-    Check,
-    Users,
-    CheckCircle,
-} from 'lucide-react'
+import { useRouter, usePathname } from 'next/navigation'
+import { CheckCircle } from 'lucide-react'
 // UI/Components
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Badge } from '@/components/ui/badge'
 // Layout/Components
-import { NotificationDropdown } from '@/components/layout/parts/notification-dropdown'
-import { UserMenuDropdown } from '@/components/layout/parts/user-menu-dropdown'
-// Page/Components
 import { HeaderGroupSelectDropdown } from '@/components/layout/parts/header-group-select-dropdown'
+import {
+    HeaderNotificationDropdown,
+    Notification,
+} from '@/components/layout/parts/header-notification-dropdown'
+import { HeaderUserMenuDropdown } from '@/components/layout/parts/header-user-menu-dropdown'
 // Types
-import type { LayoutNavItem } from '@/types'
-import type { Team } from '@/components/layout/types'
+import type { LayoutNavItem } from '@/types/common'
 import type { GroupRow } from '@/types/group'
 // Constants
 import { appInfo } from '@/constants/appInfo'
@@ -44,6 +25,7 @@ import { useCommonStore } from '@/store/common'
 import { useProfileWithGroupsStore } from '@/store/profileWithGroup'
 // Hooks
 import { useMount } from '@/hooks/use-mount'
+import { useIsMobile } from '@/hooks/use-mobile'
 // Supabase
 import type { ProfileWithGroups } from '@/lib/supabase/userData'
 
@@ -69,6 +51,7 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
     // ============================================================================
     const router = useRouter()
     const pathname = usePathname()
+    const isMobile = useIsMobile()
     const navItems: LayoutNavItem[] = [
         { href: pageRoutes.MAIN.HOME, label: 'ホーム', icon: require('lucide-react').Home },
         {
@@ -128,17 +111,23 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
     // アクション処理（Action）
     // ============================================================================
     /* グループ選択/ドロップダウンイベント */
-    const handleOnSelectGroup_HeaderGroupSelectDropdown = (selectGroup: GroupRow) => {
+    const handleOnSelectGroup = (selectGroup: GroupRow) => {
         console.log(`selectGroup: ${selectGroup}`)
     }
-    const handleOnCreateGroup_HeaderGroupSelectDropdown = () => {
+    const handleOnCreateGroup = () => {
         console.log('グループ新規作成ボタンが押下されました')
     }
-    /* ナビゲーション/ドロップダウンイベント */
-    const handleLogout = () => {
-        router.push('/auth/login')
+    /* お知らせ/ドロップダウンイベント */
+    const handleOnClickNotificationItem = (notification: Notification) => {
+        console.log('OnClickNotificationItem')
+    }
+    const handleOnClickAllRead = () => {
+        console.log('OnClickAllRead')
     }
     /* ユーザメニュー/ドロップダウンイベント */
+    const handleOnClickLogoutItem = () => {
+        router.push('/auth/login')
+    }
 
     // ============================================================================
     // テンプレート（コンポーネント描画処理）
@@ -146,9 +135,13 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
     return (
         <div className="bg-background min-h-screen">
             <header className="bg-card sticky top-0 z-50 h-[58px] border-b shadow-xs">
-                <div className="container mx-auto flex h-full items-center justify-between px-6">
+                <div
+                    className={
+                        'container mx-auto flex h-full items-center justify-between px-3 sm:px-6'
+                    }
+                >
                     {/* 左側: ロゴ、グループ選択 */}
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3">
                         <Link href="/teams" className="flex items-center gap-2.5">
                             <div className="bg-primary flex h-9 w-9 items-center justify-center rounded-xl shadow-sm">
                                 <CheckCircle className="text-primary-foreground h-5 w-5" />
@@ -164,21 +157,24 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
                             membershipWithGroup={
                                 profileWithGroups ? profileWithGroups.memberships : null
                             }
-                            onSelectGroup={handleOnSelectGroup_HeaderGroupSelectDropdown}
-                            onCreateGroup={handleOnCreateGroup_HeaderGroupSelectDropdown}
+                            onSelectGroup={handleOnSelectGroup}
+                            onCreateGroup={handleOnCreateGroup}
                         />
                     </div>
-                    {/* 右側: 通知、ユーザーメニュー */}
+                    {/* 右側: お知らせ、ユーザーメニュー */}
                     <div className="flex items-center gap-2">
-                        <NotificationDropdown
+                        {/* お知らせ/ドロップダウン */}
+                        <HeaderNotificationDropdown
                             notifications={[]}
                             unreadCount={3}
-                            onMarkAsRead={() => {}}
-                            onMarkAllAsRead={() => {}}
+                            onClickNotificationItem={handleOnClickNotificationItem}
+                            onClickAllRead={handleOnClickAllRead}
                         />
-                        <UserMenuDropdown
-                            userName={profileWithGroups?.name}
-                            onLogout={handleLogout}
+                        {/* ユーザメニュー/ドロップダウン */}
+                        <HeaderUserMenuDropdown
+                            displayUserName={profileWithGroups ? profileWithGroups.name : null}
+                            userIconSrc={profileWithGroups ? profileWithGroups.avatar_url : null}
+                            onClickLogoutItem={handleOnClickLogoutItem}
                         />
                     </div>
                 </div>

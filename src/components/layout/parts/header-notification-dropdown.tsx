@@ -1,8 +1,7 @@
 'use client'
 // Modules
-import { useState } from 'react'
-import { Bell, Trophy, Megaphone, CheckCircle, FolderOpen, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { Bell, Trophy, Megaphone, CheckCircle, FolderOpen } from 'lucide-react'
 // UI/Components
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -29,12 +28,9 @@ export type Notification = {
 interface HeaderNotificationDropdownProps {
     notifications: Notification[]
     unreadCount: number
-    onMarkAsRead: (id: string) => void
-    onMarkAllAsRead: () => void
+    onClickNotificationItem: (notification: Notification) => void
+    onClickAllRead: () => void
 }
-
-// Helper function to get icon based on notification type
-
 
 /**
  * ヘッダー/通知ドロップダウンコンポーネント
@@ -45,14 +41,9 @@ interface HeaderNotificationDropdownProps {
 export function HeaderNotificationDropdown({
     notifications,
     unreadCount,
-    onMarkAsRead,
-    onMarkAllAsRead,
+    onClickNotificationItem,
+    onClickAllRead,
 }: HeaderNotificationDropdownProps) {
-    // ============================================================================
-    // ローカル状態（LocalState）
-    // ============================================================================
-    const [isOpen, setIsOpen] = useState<boolean>(false)
-
     // ============================================================================
     // 変数（Constant）
     // ============================================================================
@@ -72,38 +63,11 @@ export function HeaderNotificationDropdown({
         }
     }
 
-    /**
-     * お知らせタップ時の処理
-     * 初心者向け解説:
-     * - ダイアログから受け取ったチーム情報を処理
-     * - 実際のアプリケーションでは、ここでAPIを呼び出してチームを作成
-     * - 今回はモックデータなので、コンソールに出力するだけ
-     */
-    // ============================================================================
-    // アクション処理（Action）
-    // ============================================================================
-    /* グループ選択/ドロップダウンイベント */
-    const handleMarkAsRead = (id: string) => {
-        onMarkAsRead(id)
-    }
-
-    const handleMarkAllAsRead = () => {
-        onMarkAllAsRead()
-    }
-
-    const handleNotificationClick = (notification: Notification) => {
-        // Mark as read first
-        handleMarkAsRead(notification.id)
-        // Navigate to notification detail page
-        router.push(`/notifications/${notification.id}`)
-        setIsOpen(false)
-    }
-
     // ============================================================================
     // テンプレート（Template）
     // ============================================================================
     return (
-        <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+        <DropdownMenu>
             {/* ドロップダウントリガー */}
             <DropdownMenuTrigger asChild>
                 <Button
@@ -121,29 +85,31 @@ export function HeaderNotificationDropdown({
             </DropdownMenuTrigger>
             {/* ドロップダウンメニュー */}
             <DropdownMenuContent
-                className="z-50 max-h-96 w-[calc(100vw-2rem)] sm:w-80"
-                align="end"
-                side="bottom"
+                className="me-3.5 max-h-96 w-[calc(100vw-2rem)] sm:w-80"
+                align="start"
                 forceMount
             >
+                {/* ドロップダウンメニュー/ヘッダー */}
                 <DropdownMenuLabel className="flex items-center justify-between">
                     <span className="font-semibold">お知らせ</span>
-                    {unreadCount > 0 && (
+                    {notifications.length > 0 && unreadCount > 0 && (
                         <Button
                             variant="ghost"
                             size="sm"
-                            onClick={handleMarkAllAsRead}
-                            className="h-6 px-2 text-xs text-slate-600 hover:text-slate-800"
+                            onClick={onClickAllRead}
+                            className="hover:bg-primary/10 h-6 border-gray-200 bg-transparent px-2 text-xs text-gray-700 hover:text-gray-700"
                         >
                             すべて既読
                         </Button>
                     )}
                 </DropdownMenuLabel>
+
                 <DropdownMenuSeparator />
 
-                <ScrollArea className="h-64">
+                {/* ドロップダウンメニュー/お知らせアイテム */}
+                <ScrollArea className={notifications.length === 0 ? 'h-34' : 'h-64'}>
                     {notifications.length === 0 ? (
-                        <div className="p-4 text-center text-slate-500">
+                        <div className="p-4 pt-6 text-center text-slate-500">
                             <Bell className="mx-auto mb-2 h-8 w-8 text-slate-300" />
                             <p className="text-sm">お知らせはありません</p>
                         </div>
@@ -153,7 +119,7 @@ export function HeaderNotificationDropdown({
                                 <DropdownMenuItem
                                     key={notification.id}
                                     className={`hover:bg-primary/10 cursor-pointer p-3 hover:text-gray-700 ${!notification.isRead ? 'bg-blue-50/50' : ''}`}
-                                    onClick={() => handleNotificationClick(notification)}
+                                    onClick={() => onClickNotificationItem(notification)}
                                 >
                                     <div className="flex w-full items-start gap-3">
                                         <div className="mt-0.5 flex-shrink-0">
@@ -188,14 +154,15 @@ export function HeaderNotificationDropdown({
                     )}
                 </ScrollArea>
 
+                {/* ドロップダウンメニュー/すべてのお知らせを見る */}
                 {notifications.length > 0 && (
                     <>
                         <DropdownMenuSeparator />
+
                         <DropdownMenuItem
                             className="hover:bg-primary/10 cursor-pointer text-center text-sm text-slate-600 hover:text-gray-700"
                             onClick={() => {
                                 router.push('/notifications')
-                                setIsOpen(false)
                             }}
                         >
                             すべてのお知らせを見る
