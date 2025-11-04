@@ -28,8 +28,6 @@ export type Notification = {
 interface HeaderNotificationDropdownProps {
     notifications: Notification[]
     unreadCount: number
-    onClickNotificationItem: (notification: Notification) => void
-    onClickAllRead: () => void
 }
 
 /**
@@ -41,8 +39,6 @@ interface HeaderNotificationDropdownProps {
 export function HeaderNotificationDropdown({
     notifications,
     unreadCount,
-    onClickNotificationItem,
-    onClickAllRead,
 }: HeaderNotificationDropdownProps) {
     // ============================================================================
     // 変数（Constant）
@@ -61,6 +57,16 @@ export function HeaderNotificationDropdown({
             default:
                 return <Bell className="h-4 w-4 text-slate-600" />
         }
+    }
+
+    // ============================================================================
+    // アクション処理（Action）
+    // ============================================================================
+    const onClickNotificationItem = (notification: Notification) => {
+        console.log('OnClickNotificationItem')
+    }
+    const onClickAllRead = () => {
+        console.log('OnClickAllRead')
     }
 
     // ============================================================================

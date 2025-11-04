@@ -16,6 +16,8 @@ import { appInfo } from '@/constants/appInfo'
 import { useCommonStore } from '@/store/common'
 // Supabase
 import { supabase } from '@/lib/supabase/client'
+// Actions
+import { getAndSetDefaultGroupId } from '@/actions/authActions'
 
 /**
  * ログインページ
@@ -85,13 +87,22 @@ export default function LoginPage() {
                 await new Promise((r) => setTimeout(r, 200))
             }
 
-            // トランジション発火（ページ遷移）
-            startTransition(() => {
-                router.push('/home')
-            })
+            // ユーザの全メンバーシップから個人グループIDを取得し、Cookieへセット
+            try {
+                // サーバーアクションを実行して、Cookie設定とグループID取得をサーバー側で完結させる
+                await getAndSetDefaultGroupId(data.user!.id)
 
-            // トランジションとは独立してローディング解除
-            setIsLoading(false)
+                // トランジション発火（ページ遷移）
+                startTransition(() => {
+                    router.push('/home')
+                })
+            } catch (e) {
+                // エラー処理
+                setError('ログイン後の初期設定に失敗しました。')
+            } finally {
+                // トランジションとは独立してローディング解除
+                setIsLoading(false)
+            }
         }
     }
 

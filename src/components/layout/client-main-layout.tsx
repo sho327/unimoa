@@ -34,6 +34,7 @@ import { cn } from '@/lib/utils'
 type Props = {
     children: React.ReactNode
     profileWithGroups: ProfileWithGroups | null
+    selectedGroupId: string | null
 }
 /**
  * メインレイアウトコンポーネント(クライアントコンポーネント)
@@ -41,7 +42,7 @@ type Props = {
  * @createdBy KatoShogo
  * @createdAt 2025/11/02
  */
-export default function ClientMainLayout({ children, profileWithGroups }: Props) {
+export default function ClientMainLayout({ children, profileWithGroups, selectedGroupId }: Props) {
     // ============================================================================
     // ローカル状態（LocalState）
     // ============================================================================
@@ -115,28 +116,6 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
     }, [profileWithGroups, setProfileWithGroups])
 
     // ============================================================================
-    // アクション処理（Action）
-    // ============================================================================
-    /* グループ選択/ドロップダウンイベント */
-    const handleOnSelectGroup = (selectGroup: GroupRow) => {
-        console.log(`selectGroup: ${selectGroup}`)
-    }
-    const handleOnClickCreateGroup = () => {
-        console.log('グループ新規作成ボタンが押下されました')
-    }
-    /* お知らせ/ドロップダウンイベント */
-    const handleOnClickNotificationItem = (notification: Notification) => {
-        console.log('OnClickNotificationItem')
-    }
-    const handleOnClickAllRead = () => {
-        console.log('OnClickAllRead')
-    }
-    /* ユーザメニュー/ドロップダウンイベント */
-    const handleOnClickLogoutItem = () => {
-        router.push('/auth/login')
-    }
-
-    // ============================================================================
     // テンプレート（コンポーネント描画処理）
     // ============================================================================
     return (
@@ -164,24 +143,16 @@ export default function ClientMainLayout({ children, profileWithGroups }: Props)
                             membershipWithGroup={
                                 profileWithGroups ? profileWithGroups.memberships : null
                             }
-                            onSelectGroup={handleOnSelectGroup}
-                            onClickCreateGroup={handleOnClickCreateGroup}
                         />
                     </div>
                     {/* 右側: お知らせ、ユーザーメニュー */}
                     <div className="flex items-center gap-2">
                         {/* お知らせ/ドロップダウン */}
-                        <HeaderNotificationDropdown
-                            notifications={[]}
-                            unreadCount={3}
-                            onClickNotificationItem={handleOnClickNotificationItem}
-                            onClickAllRead={handleOnClickAllRead}
-                        />
+                        <HeaderNotificationDropdown notifications={[]} unreadCount={3} />
                         {/* ユーザメニュー/ドロップダウン */}
                         <HeaderUserMenuDropdown
                             displayUserName={profileWithGroups ? profileWithGroups.name : null}
                             userIconSrc={profileWithGroups ? profileWithGroups.avatar_url : null}
-                            onClickLogoutItem={handleOnClickLogoutItem}
                         />
                     </div>
                 </div>

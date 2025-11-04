@@ -1,8 +1,9 @@
 // Modules
-import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ChevronDown, Plus, Check, Users } from 'lucide-react'
 // UI/Conponents
+import { Button } from '@/components/ui/button'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -17,12 +18,12 @@ import type { GroupRow } from '@/types/group'
 import { useIsMobile } from '@/hooks/use-mobile'
 // Supabase
 import type { MembershipWithGroup } from '@/lib/supabase/userData'
+// Actions
+import { setSelectedGroupCookie } from '@/actions/groupActions'
 
 interface HeaderGroupSelectDropdownProps {
     selectGroup: GroupRow | null
     membershipWithGroup: MembershipWithGroup[] | null
-    onSelectGroup: (selectGroup: GroupRow) => void
-    onClickCreateGroup: () => void
 }
 
 /**
@@ -34,13 +35,26 @@ interface HeaderGroupSelectDropdownProps {
 export const HeaderGroupSelectDropdown = ({
     selectGroup,
     membershipWithGroup,
-    onSelectGroup,
-    onClickCreateGroup,
 }: HeaderGroupSelectDropdownProps) => {
     // ============================================================================
     // 変数（Constant）
     // ============================================================================
+    const router = useRouter()
     const isMobile = useIsMobile()
+
+    // ============================================================================
+    // アクション処理（Action）
+    // ============================================================================
+    const onSelectGroup = async (selectGroupId: string) => {
+        console.log(`selectGroup: ${selectGroupId}`)
+        // Cookie設定アクションを呼び出す
+        await setSelectedGroupCookie(selectGroupId)
+        // 現在のページをサーバー側で再レンダリング（データ再フェッチ）
+        router.refresh()
+    }
+    const onClickCreateGroup = () => {
+        console.log('グループ新規作成ボタンが押下されました')
+    }
 
     // ============================================================================
     // テンプレート（Template）
@@ -72,7 +86,7 @@ export const HeaderGroupSelectDropdown = ({
                     membershipWithGroup.map((membership, itemIndex) => (
                         <DropdownMenuItem
                             key={itemIndex}
-                            onClick={() => onSelectGroup(membership.groups)}
+                            onClick={() => onSelectGroup(membership.groups.id)}
                             className="flex cursor-pointer items-center justify-between rounded-lg"
                         >
                             <div className="flex items-center gap-2">

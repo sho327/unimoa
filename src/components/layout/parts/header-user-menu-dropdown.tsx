@@ -1,4 +1,5 @@
 // Modules
+import { useTransition } from 'react'
 import { User, LogOut } from 'lucide-react'
 import Link from 'next/link'
 // UI/Components
@@ -14,11 +15,13 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 // Hooks
 import { useIsMobile } from '@/hooks/use-mobile'
+// Actions
+import { logout } from '@/actions/authActions'
 
 interface HeaderUserMenuDropdownProps {
     displayUserName: string | null
     userIconSrc?: string | null
-    onClickLogoutItem?: () => void
+    // onClickLogoutItem?: () => void
 }
 
 /**
@@ -30,13 +33,23 @@ interface HeaderUserMenuDropdownProps {
 export const HeaderUserMenuDropdown = ({
     displayUserName,
     userIconSrc,
-    onClickLogoutItem,
+    // onClickLogoutItem,
 }: HeaderUserMenuDropdownProps) => {
     // ============================================================================
     // 変数（Constant）
     // ============================================================================
     const isMobile = useIsMobile()
+    const [isPending, startTransition] = useTransition()
 
+    // ============================================================================
+    // アクション処理（Action）
+    // ============================================================================
+    const onClickLogoutItem = () => {
+        startTransition(async () => {
+            // サーバーアクションを呼び出し、リダイレクトまで全てサーバーで完結
+            await logout()
+        })
+    }
     // ============================================================================
     // テンプレート（Template）
     // ============================================================================
