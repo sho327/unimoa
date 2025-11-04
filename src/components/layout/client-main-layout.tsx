@@ -3,7 +3,7 @@
 import type React from 'react'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { CheckCircle, Menu, X } from 'lucide-react'
 // UI/Components
 import { Button } from '@/components/ui/button'
@@ -44,20 +44,8 @@ type Props = {
  */
 export default function ClientMainLayout({ children, profileWithGroups, selectedGroupId }: Props) {
     // ============================================================================
-    // ローカル状態（LocalState）
-    // ============================================================================
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-    // ============================================================================
-    // グローバル状態（GlobalState）
-    // ============================================================================
-    const { selectGroup, setSelectGroup } = useCommonStore()
-    const { setProfileWithGroups } = useProfileWithGroupsStore()
-
-    // ============================================================================
     // 変数（Constant）
     // ============================================================================
-    const router = useRouter()
     const pathname = usePathname()
     const isMobile = useIsMobile()
     const navItems: LayoutNavItem[] = [
@@ -77,34 +65,34 @@ export default function ClientMainLayout({ children, profileWithGroups, selected
         // { href: `/files`, label: "ファイル", icon: require("lucide-react").FolderOpen },
         // { href: `/member`, label: 'メンバー', icon: require('lucide-react').Users },
     ]
+    // 最初に表示すべきグループオブジェクトを計算するヘルパー関数 (純粋関数)
+    const getInitialGroup = (
+        id: string | null,
+        profileData: ProfileWithGroups | null
+    ): GroupRow | null => {
+        const memberships = profileData?.memberships || []
+        if (memberships.length === 0) return null
+
+        // 1. Props で渡された ID に対応するグループオブジェクトを探す
+        const selectedMembership = memberships.find((m) => m.groups.id === id)
+        if (selectedMembership) return selectedMembership.groups
+
+        // 2. IDが無効または未設定の場合、個人グループを探す
+        return memberships.find((m) => m.groups.is_personal)?.groups || null
+    }
 
     // ============================================================================
-    // 初期描画時の処理（Mounted）
+    // ローカル状態（LocalState）
     // ============================================================================
-    useMount(() => {
-        /* 選択中グループの設定 */
-        // 1. 所属グループ(メンバーシップ)が存在しない場合は null に設定し、早期リターン
-        const memberships = profileWithGroups?.memberships
-        if (!memberships || memberships.length === 0) {
-            setSelectGroup(null)
-            return
-        }
-        // 2. 個人グループのリストを取得 (頻繁に使うため変数化)
-        const personalGroup = memberships.find((m) => m.groups.is_personal)?.groups || null
-        // 3. 選択中グループの存在チェックと設定
-        // 3A. selectGroup が未設定の場合: 個人グループを設定
-        if (!selectGroup) {
-            setSelectGroup(personalGroup)
-            return
-        }
-        // 3B. selectGroup が設定済みだが、所属グループ内に存在しない場合: 個人グループに切り替え
-        const isGroupExist = memberships.some((m) => m.groups.id === selectGroup.id)
-        if (!isGroupExist) {
-            setSelectGroup(personalGroup)
-            // 処理終了
-        }
-        // 3C. (selectGroupが設定済みで、所属グループ内に存在する場合): 何もしない (現状維持)
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [currentGroup, setCurrentGroup] = useState<GroupRow | null>(() => {
+        return getInitialGroup(selectedGroupId, profileWithGroups)
     })
+
+    // ============================================================================
+    // グローバル状態（GlobalState）
+    // ============================================================================
+    const { setProfileWithGroups } = useProfileWithGroupsStore()
 
     // ============================================================================
     // Effect(Watch)処理（Effect(Watch)）
@@ -112,8 +100,13 @@ export default function ClientMainLayout({ children, profileWithGroups, selected
     useEffect(() => {
         if (profileWithGroups) setProfileWithGroups(profileWithGroups)
         else setProfileWithGroups(null)
-        console.log(profileWithGroups)
-    }, [profileWithGroups, setProfileWithGroups])
+
+        // 既に setCurrentGroup が実行済みの場合、Props が変わったときだけ更新
+        const newGroup = getInitialGroup(selectedGroupId, profileWithGroups)
+        if (newGroup?.id !== currentGroup?.id) {
+            setCurrentGroup(newGroup)
+        }
+    }, [profileWithGroups, setProfileWithGroups, selectedGroupId])
 
     // ============================================================================
     // テンプレート（コンポーネント描画処理）
@@ -139,7 +132,7 @@ export default function ClientMainLayout({ children, profileWithGroups, selected
                         <div className="mx-2 hidden h-4 w-px bg-gray-300 md:block" />
                         {/* グループ選択/ドロップダウン */}
                         <HeaderGroupSelectDropdown
-                            selectGroup={selectGroup}
+                            selectGroup={currentGroup}
                             membershipWithGroup={
                                 profileWithGroups ? profileWithGroups.memberships : null
                             }

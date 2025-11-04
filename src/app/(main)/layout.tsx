@@ -18,10 +18,9 @@ export default async function MainLayout({ children }: { children: React.ReactNo
     // 変数（Constant）
     // ============================================================================
     const profileWithGroups = await fetchAuthenticatedUserData()
-
     // *** Cookie/選択中グループID検証(ページよりも先に動くレイアウトで検証/再設定) ***
     // 1. Cookieから選択グループIDを安全に取得 (TSエラー回避のため as any を使用)
-    const cookieStore = cookies() as any
+    const cookieStore = (await cookies()) as any
     const selectedGroupIdFromCookie: string | null =
         cookieStore.get(SELECTED_GROUP_ID_COOKIE)?.value || null
     // 2. 初期グループIDの決定ロジック
@@ -51,7 +50,7 @@ export default async function MainLayout({ children }: { children: React.ReactNo
     if (finalSelectedGroupId !== selectedGroupIdFromCookie) {
         if (finalSelectedGroupId) {
             // 新しいIDでCookieをセット
-            ;(cookies() as any).set(SELECTED_GROUP_ID_COOKIE, finalSelectedGroupId, {
+            ;((await cookies()) as any).set(SELECTED_GROUP_ID_COOKIE, finalSelectedGroupId, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
                 maxAge: 60 * 60 * 24 * 30,
@@ -59,7 +58,7 @@ export default async function MainLayout({ children }: { children: React.ReactNo
             })
         } else {
             // IDがない場合はCookieを削除
-            ;(cookies() as any).delete(SELECTED_GROUP_ID_COOKIE)
+            ;((await cookies()) as any).delete(SELECTED_GROUP_ID_COOKIE)
         }
     }
 

@@ -10,7 +10,7 @@ const SELECTED_GROUP_ID_COOKIE = 'selectedGroupId'
  */
 export async function setSelectedGroupCookie(groupId: string) {
     // cookies() の戻り値を 'any' にキャストして型エラーを回避
-    const cookieStore: any = cookies()
+    const cookieStore: any = await cookies()
 
     if (!groupId) {
         // IDが空の場合はCookieを削除
