@@ -98,13 +98,23 @@ export default function ClientMainLayout({ children, profileWithGroups, selected
     // Effect(Watch)処理（Effect(Watch)）
     // ============================================================================
     useEffect(() => {
+        // 1. プロファイル情報のストア設定 (既存)
         if (profileWithGroups) setProfileWithGroups(profileWithGroups)
         else setProfileWithGroups(null)
 
+        // 2. 選択中グループの表示設定
         // 既に setCurrentGroup が実行済みの場合、Props が変わったときだけ更新
         const newGroup = getInitialGroup(selectedGroupId, profileWithGroups)
         if (newGroup?.id !== currentGroup?.id) {
             setCurrentGroup(newGroup)
+        }
+
+        // 3. ローディング終了処理
+        const { isLoading, setIsLoading } = useCommonStore.getState()
+        if (isLoading) {
+            // Propsが更新された = サーバーからの応答が完了した
+            setIsLoading(false)
+            console.log('Loading reset complete via ClientMainLayout.')
         }
     }, [profileWithGroups, setProfileWithGroups, selectedGroupId])
 

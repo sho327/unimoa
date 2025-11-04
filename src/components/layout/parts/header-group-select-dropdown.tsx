@@ -16,6 +16,8 @@ import {
 import type { GroupRow } from '@/types/group'
 // Hooks
 import { useIsMobile } from '@/hooks/use-mobile'
+// Store
+import { useCommonStore } from '@/store/common'
 // Supabase
 import type { MembershipWithGroup } from '@/lib/supabase/userData'
 // Actions
@@ -43,9 +45,15 @@ export const HeaderGroupSelectDropdown = ({
     const isMobile = useIsMobile()
 
     // ============================================================================
+    // グローバル状態（GlobalState）
+    // ============================================================================
+    const { setIsLoading } = useCommonStore()
+
+    // ============================================================================
     // アクション処理（Action）
     // ============================================================================
     const onSelectGroup = async (selectGroupId: string) => {
+        setIsLoading(true)
         console.log(`selectGroup: ${selectGroupId}`)
         // Cookie設定アクションを呼び出す
         await setSelectedGroupCookie(selectGroupId)
