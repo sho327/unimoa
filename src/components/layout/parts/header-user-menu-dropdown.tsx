@@ -15,6 +15,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 // Hooks
 import { useIsMobile } from '@/hooks/use-mobile'
+// Store
+import { useCommonStore } from '@/store/common'
 // Actions
 import { logout } from '@/actions/authActions'
 
@@ -40,6 +42,11 @@ export const HeaderUserMenuDropdown = ({
     // ============================================================================
     const isMobile = useIsMobile()
     const [isPending, startTransition] = useTransition()
+
+    // ============================================================================
+    // グローバル状態（GlobalState）
+    // ============================================================================
+    const { setIsLoading } = useCommonStore()
 
     // ============================================================================
     // アクション処理（Action）

@@ -19,7 +19,7 @@ export default async function TaskListPage() {
     // 変数（Constant）
     // ============================================================================
     // 1. Cookieから選択グループIDを取得
-    const cookieStore = cookies() as any // TSエラー回避のため as any を使用
+    const cookieStore = (await cookies()) as any
     const selectedGroupId = cookieStore.get(SELECTED_GROUP_ID_COOKIE)?.value || null
     if (!selectedGroupId) {
         // レイアウトがフォールバックに失敗した場合のみ発生するエラー
