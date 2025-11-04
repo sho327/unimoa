@@ -8,7 +8,14 @@ import { CheckCircle } from 'lucide-react'
 import { appInfo } from '@/constants/appInfo'
 
 export default function ClientMainLayout({ children }: { children: React.ReactNode }) {
+    // ============================================================================
+    // 変数（Constant）
+    // ============================================================================
     const router = useRouter()
+
+    // ============================================================================
+    // テンプレート（コンポーネント描画処理）
+    // ============================================================================
     return (
         <div className="from-background to-secondary/20 flex min-h-screen items-center justify-center bg-gradient-to-b p-4">
             <div className="w-full max-w-md space-y-6">

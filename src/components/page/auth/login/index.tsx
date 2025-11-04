@@ -27,6 +27,12 @@ import { getAndSetDefaultGroupId } from '@/actions/authActions'
  */
 export default function LoginPage() {
     // ============================================================================
+    // 変数（Constant）
+    // ============================================================================
+    const router = useRouter()
+    const [isPending, startTransition] = useTransition()
+
+    // ============================================================================
     // ローカル状態（LocalState）
     // ============================================================================
     const [email, setEmail] = useState('')
@@ -37,12 +43,6 @@ export default function LoginPage() {
     // グローバル状態（GlobalState）
     // ============================================================================
     const { setIsLoading } = useCommonStore()
-
-    // ============================================================================
-    // 変数（Constant）
-    // ============================================================================
-    const router = useRouter()
-    const [isPending, startTransition] = useTransition()
 
     // ============================================================================
     // スキーマ定義（Zod Validation）

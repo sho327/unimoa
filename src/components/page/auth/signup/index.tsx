@@ -23,6 +23,12 @@ import { supabase } from '@/lib/supabase/client'
  */
 export default function SignupPage() {
     // ============================================================================
+    // 変数（Constant）
+    // ============================================================================
+    const router = useRouter()
+    const [isPending, startTransition] = useTransition()
+
+    // ============================================================================
     // ローカル状態（LocalState）
     // ============================================================================
     const [name, setName] = useState('')
@@ -34,12 +40,6 @@ export default function SignupPage() {
     // グローバル状態（GlobalState）
     // ============================================================================
     const { setIsLoading } = useCommonStore()
-
-    // ============================================================================
-    // 変数（Constant）
-    // ============================================================================
-    const router = useRouter()
-    const [isPending, startTransition] = useTransition()
 
     // ============================================================================
     // スキーマ定義（Zod Validation）
