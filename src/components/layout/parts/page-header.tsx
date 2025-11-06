@@ -38,26 +38,25 @@ export default function PageHeader({
     // ============================================================================
     return (
         <>
-            {/* 戻るボタン */}
-            {isBackButton && (
-                <div className="mb-4 flex items-center gap-4">
-                    <Link href="/teams">
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-gray-200 bg-transparent text-gray-700 hover:bg-gray-200 hover:text-gray-700"
-                        >
-                            <ArrowLeft className="mr-1 h-4 w-4" />
-                            戻る
-                        </Button>
-                    </Link>
-                </div>
-            )}
             {/* ページアイコン/タイトル/詳細 */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2.5 sm:gap-3">
+                    {/* 戻るボタン */}
+                    {isBackButton && (
+                        <Link href="/task/list">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="mr-1.5 cursor-pointer rounded-md border-gray-200 bg-white text-gray-700 shadow-xs hover:bg-gray-400/10 hover:text-gray-700"
+                            >
+                                <ArrowLeft className="h-4 w-4" />
+                                {/* 戻る */}
+                            </Button>
+                        </Link>
+                    )}
+                    {/* アイコン */}
                     {Icon && (
-                        <div className="bg-secondary rounded-xl p-3">
+                        <div className="bg-secondary mr-1.5 rounded-xl p-3">
                             <Icon
                                 className={
                                     'h-6 w-6' +

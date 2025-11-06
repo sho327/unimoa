@@ -172,9 +172,9 @@ export default function ClientMainLayout({ children, profileWithGroups, selected
                                     <Button
                                         variant={isActive ? 'default' : 'ghost'}
                                         size="sm"
-                                        className={`rounded-lg whitespace-nowrap ${isActive ? 'shadow-sm' : 'hover:bg-primary/10 hover:text-gray-700'}`}
+                                        className={`cursor-pointer rounded-lg whitespace-nowrap ${isActive ? 'shadow-sm' : 'hover:bg-primary/10 hover:text-gray-700'}`}
                                     >
-                                        <Icon className="mr-2 h-4 w-4" />
+                                        <Icon className="mr-1.5 h-4 w-4" />
                                         {item.label}
                                     </Button>
                                 </Link>
@@ -226,7 +226,7 @@ export default function ClientMainLayout({ children, profileWithGroups, selected
                     </div>
                 )}
             </div>
-            <main className="container mx-auto px-3 py-5.5 sm:px-6 sm:py-8">{children}</main>
+            <main className="container mx-auto px-3 py-5.5 sm:px-6 sm:py-6">{children}</main>
         </div>
     )
 }
